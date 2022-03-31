@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">eVyšetrenie</string>
+
+    <string name="heading_login">Prihlásenie</string>
+    <string name="login_email_field_hint">E-mail</string>
+    <string name="login_password_field_hint">Heslo</string>
+    <string name="login_login_button">Prihlásiť sa</string>
+    <string name="login_register_button">Registrovať sa</string>
 </resources>

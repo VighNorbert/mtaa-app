@@ -1,17 +1,35 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
 <!--    <style name="Theme.EVysetrenie" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
     <style name="Theme.EVysetrenie" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
+
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <!-- Secondary brand color. -->
+
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
-        <!-- Status bar color. -->
+
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/open_sans</item>
+
+        <item name="materialButtonStyle">@style/PrimaryButton</item>
+
+    </style>
+
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryDarkColor</item>
+        <item name="strokeColor">@color/primaryDarkColor</item>
+<!--        <item name="app:strokeColor">@color/green"</item>-->
+<!--        <item name="app:strokeWidth">2dp"</item>-->
     </style>
 </resources>
