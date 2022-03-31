@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,6 +16,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:adjustViewBounds="false"
+        android:background="#00000000"
+        android:contentDescription="@string/general.back_button"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="onClickBack"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/appName"
@@ -36,6 +55,7 @@
         app:layout_constraintVertical_bias="0.571" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,78 +77,41 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="64dp"
                 android:fontFamily="@font/poppins"
-                android:text="@string/login.heading"
+                android:text="@string/register.heading"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="30sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailTextLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailTextInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field.email"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#757575"
-                    tools:ignore="TextContrastCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordTextLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/passwordTextInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field.password"
-                    android:inputType="textPassword"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#757575"
-                    tools:ignore="TextContrastCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/register.choose_role"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="22sp" />
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/doctorButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/login.login_button"
+                android:onClick="onClickRegisterDoctor"
+                android:text="@string/general.role.doctor"
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/registerButton"
-                style="@style/SecondaryButton"
+                android:id="@+id/patientButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:onClick="onClickRegister"
-                android:text="@string/login.register_button" />
+                android:onClick="onClickRegisterPatient"
+                android:text="@string/general.role.patient" />
 
         </LinearLayout>
     </ScrollView>
