@@ -10,4 +10,12 @@
     <color name="secondaryLightColor">#6746c3</color>
     <color name="secondaryDarkColor">#000063</color>
     <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="alertStrokeColor">#C61919</color>
+    <color name="alertBackgroundColor">#FFCDCD</color>
+
+    <color name="alertSuccessStrokeColor">#076A08</color>
+    <color name="alertSuccessBackgroundColor">#B6FDB7</color>
+
+    <color name="alertTextColor">#000</color>
 </resources>

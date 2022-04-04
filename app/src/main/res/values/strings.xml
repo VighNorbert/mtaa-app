@@ -18,6 +18,7 @@
     <string name="register.heading">Registrácia</string>
     <string name="register.choose_role">Vyberte rolu:</string>
     <string name="register.register_button">Registrovať sa</string>
+    <string name="register.success">Úspešne ste sa zaregistrovali! Teraz sa môžete prihlásiť.</string>
 
     <string name="register.patient.heading">Registrácia - pacient</string>
 
