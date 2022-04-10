@@ -12,6 +12,8 @@ class RegisterActivity : BaseActivity() {
     }
 
     fun onClickRegisterDoctor(x: View) {
+        val intent = Intent(this, RegisterDoctorActivity::class.java)
+        startActivity(intent)
     }
 
     fun onClickRegisterPatient(x: View) {

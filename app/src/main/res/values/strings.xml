@@ -10,6 +10,14 @@
     <string name="field.email">E-mail</string>
     <string name="field.phone">Tel.č.</string>
     <string name="field.password">Heslo</string>
+    <string name="field.title">Titul</string>
+    <string name="field.specialisation">Špecializácia</string>
+    <string name="field.address">Adresa</string>
+    <string name="field.city">Mesto</string>
+    <string name="field.description">Popis</string>
+    <string name="field.appointments_length">Dĺžka jedného vyšetrenia</string>
+    <string name="field.work_schedules">Ordinačné hodiny</string>
+
 
     <string name="login.heading">Prihlásenie</string>
     <string name="login.login_button">Prihlásiť sa</string>
@@ -21,5 +29,13 @@
     <string name="register.success">Úspešne ste sa zaregistrovali! Teraz sa môžete prihlásiť.</string>
 
     <string name="register.patient.heading">Registrácia - pacient</string>
+
+    <string name="register.doctor.heading">Registrácia - lekár</string>
+    <string name="register.doctor.photo">Avatar</string>
+    <string name="register.doctor.choose_photo">Nahrať avatar</string>
+    <string name="register.doctor.no_photo">Avatar zatiaľ nebol vybraný</string>
+    <string name="register.doctor.logins">Prihlasovacie údaje</string>
+    <string name="register.doctor.privates">Osobné údaje</string>
+    <string name="register.doctor.ambulance">Údaje o ambulancii</string>
 
 </resources>
