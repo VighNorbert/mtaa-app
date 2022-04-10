@@ -1,6 +1,5 @@
 package sk.evysetrenie.api
 
-import android.os.Environment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -17,7 +16,6 @@ import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
 import sk.evysetrenie.api.model.contracts.requests.RegisterRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.RegisterResponse
-import java.io.File
 import java.lang.Exception
 
 class AuthService {
@@ -117,8 +115,8 @@ class AuthService {
                             activity.runOnUiThread { activity.showError(ApiError(response.code)) }
                         }
                     } else {
-                        val rr = Json.decodeFromString<RegisterResponse>(response.body!!.string())
-                        activity.runOnUiThread { activity.successfulRegistration(rr.id) }
+                        Json.decodeFromString<RegisterResponse>(response.body!!.string())
+                        activity.runOnUiThread { activity.successfulRegistration() }
                     }
                 }
             }

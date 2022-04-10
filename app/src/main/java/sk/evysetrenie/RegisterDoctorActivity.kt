@@ -75,7 +75,7 @@ class RegisterDoctorActivity : SpecialisationReader() {
     private lateinit var specialisationService: SpecialisationService
 
     // https://www.android--code.com/2020/06/android-kotlin-bitmap-crop-square.html
-    fun Bitmap.toSquare():Bitmap?{
+    private fun Bitmap.toSquare():Bitmap{
         // get the small side of bitmap
         val side = min(width,height)
 
@@ -94,7 +94,7 @@ class RegisterDoctorActivity : SpecialisationReader() {
         ).scale(400, 400)
     }
 
-    fun Bitmap.toBase64String(): String {
+    private fun Bitmap.toBase64String(): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         this.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream)
         val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
@@ -177,6 +177,8 @@ class RegisterDoctorActivity : SpecialisationReader() {
         appointmentsLengthTextLayout = findViewById(R.id.appointmentsLengthTextLayout)
         appointmentsLengthTextInput.addTextChangedListener(TextFieldValidation(appointmentsLengthTextInput))
 
+        // TODO add dynamic work schedules form
+
         errorAlert = findViewById(R.id.errorAlert)
 
         avatarImageView = findViewById(R.id.avatarImageView)
@@ -228,7 +230,7 @@ class RegisterDoctorActivity : SpecialisationReader() {
             && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
     }
 
-    fun hideError() {
+    private fun hideError() {
         errorAlert.visibility = View.GONE
     }
 
@@ -279,7 +281,7 @@ class RegisterDoctorActivity : SpecialisationReader() {
         errorAlert.text = error.message
     }
 
-    fun successfulRegistration(userId: Int) {
+    fun successfulRegistration() {
         loadingDialog.dismiss()
         val intent = Intent(this, LoginActivity::class.java)
         Toast.makeText(applicationContext, getString(R.string.register_success),Toast.LENGTH_SHORT).show()
