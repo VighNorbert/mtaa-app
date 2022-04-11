@@ -16,13 +16,15 @@
             android:resource="@array/preloaded_fonts" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
             android:name=".RegisterPatientActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DoctorsActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

@@ -22,4 +22,6 @@
 
     <string name="register.patient.heading">Registrácia - pacient</string>
 
+    <string name="doctors.heading">Lekári</string>
+
 </resources>

@@ -45,4 +45,13 @@ object AuthState {
         isDoctor = null
         accessToken = null
     }
+
+    fun getAccessToken() : String {
+        if (accessToken != null) {
+            return accessToken as String
+        }
+        else {
+            return ""
+        }
+    }
 }
