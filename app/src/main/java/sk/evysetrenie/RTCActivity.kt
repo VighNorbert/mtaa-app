@@ -3,6 +3,7 @@ package sk.evysetrenie
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -48,9 +49,9 @@ class RTCActivity : AppCompatActivity() {
 
     private var isJoin = false
 
-    private var isMute = false
+    private var audioEnabled = true
 
-    private var isVideoPaused = false
+    private var videoEnabled = true
 
     private var inSpeakerMode = true
 
@@ -98,24 +99,36 @@ class RTCActivity : AppCompatActivity() {
             }
         }
         videoButton.setOnClickListener {
-            if (isVideoPaused) {
-                isVideoPaused = false
+            if (videoEnabled) {
+                videoEnabled = false
+                println("-> VP: $videoEnabled")
                 videoButton.setImageResource(R.drawable.ic_baseline_videocam_off_24)
+                videoButton.backgroundTintList = ColorStateList.valueOf(this.getColor(R.color.white))
+                videoButton.imageTintList = ColorStateList.valueOf(this.getColor(androidx.cardview.R.color.cardview_dark_background))
             } else {
-                isVideoPaused = true
+                videoEnabled = true
+                println("-> VP: $videoEnabled")
                 videoButton.setImageResource(R.drawable.ic_baseline_videocam_24)
+                videoButton.backgroundTintList = ColorStateList.valueOf(this.getColor(androidx.cardview.R.color.cardview_dark_background))
+                videoButton.imageTintList = ColorStateList.valueOf(this.getColor(R.color.white))
             }
-            rtcClient.enableVideo(isVideoPaused)
+            rtcClient.enableVideo(videoEnabled)
         }
         micButton.setOnClickListener {
-            if (isMute) {
-                isMute = false
+            if (audioEnabled) {
+                audioEnabled = false
+                println("-> MUTE: $audioEnabled")
                 micButton.setImageResource(R.drawable.ic_baseline_mic_off_24)
+                micButton.backgroundTintList = ColorStateList.valueOf(this.getColor(R.color.white))
+                micButton.imageTintList = ColorStateList.valueOf(this.getColor(androidx.cardview.R.color.cardview_dark_background))
             } else {
-                isMute = true
+                audioEnabled = true
+                println("-> MUTE: $audioEnabled")
                 micButton.setImageResource(R.drawable.ic_baseline_mic_24)
+                micButton.backgroundTintList = ColorStateList.valueOf(this.getColor(androidx.cardview.R.color.cardview_dark_background))
+                micButton.imageTintList = ColorStateList.valueOf(this.getColor(R.color.white))
             }
-            rtcClient.enableAudio(isMute)
+            rtcClient.enableAudio(audioEnabled)
         }
         endCallButton.setOnClickListener {
             rtcClient.endCall(meetingID)

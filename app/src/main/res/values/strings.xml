@@ -40,4 +40,10 @@
 
     <string name="pref_speakerphone_key">speakerphone_preference</string>
     <string name="pref_speakerphone_default">auto</string>
+
+    <string name="webrtc.microphone">Mikrofón</string>
+    <string name="webrtc.camera">Kamera</string>
+    <string name="webrtc.end_call">Ukončiť hovor</string>
+    <string name="webrtc.switch_camera">Zmeniť kameru</string>
+    <string name="webrtc.audio_output">Výstup zvuku</string>
 </resources>
