@@ -1,8 +1,14 @@
 package sk.evysetrenie
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Adapter
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.Doctor
@@ -18,26 +24,45 @@ class DoctorsActivity : BaseActivity() {
     private var page: Int = 1
     private var per_page: Int = 10
 
-    private lateinit var doctorsAdapter: DoctorsAdapter
+    private var loading = false
 
-    private lateinit var doctorName: TextView
+    private lateinit var doctorsLayoutManager: LinearLayoutManager
+    private lateinit var doctorsAdapter: DoctorsAdapter
+    private lateinit var doctorsRecyclerView: RecyclerView
+    private lateinit var doctorsProgressBar: ProgressBar
+
+    private var doctorsList: MutableList<DoctorsResponse> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadingDialog.open()
         checkLoggedOut()
         if (AuthState.isLoggedIn()) {
             setContentView(R.layout.activity_doctors)
         }
-        val dr = DoctorsRequest(
-            this.name,
-            this.specialisation,
-            this.city,
-            this.only_favourites,
-            this.page,
-            this.per_page
-        )
-        DoctorsService().getCollection(dr, this)
+
+        doctorsLayoutManager = LinearLayoutManager(this)
+        doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)
+        doctorsProgressBar = findViewById(R.id.doctorsProgressBar)
+
+        getDoctors()
+        doctorsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    val visibleItemCount = doctorsLayoutManager.childCount
+                    val pastVisibleItem = doctorsLayoutManager.findFirstCompletelyVisibleItemPosition()
+                    val total = doctorsAdapter.itemCount
+
+                    if (!loading) {
+                        if (visibleItemCount + pastVisibleItem >= total) {
+                            page++
+                            getDoctors()
+                        }
+                    }
+                }
+
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     override fun onBackPressed() { }
@@ -49,9 +74,32 @@ class DoctorsActivity : BaseActivity() {
         }
     }
 
-    fun dataReceived(doctorsResponse: List<DoctorsResponse>) {
-        doctorsAdapter = DoctorsAdapter()
-        loadingDialog.dismiss()
-        doctorName.text = doctorsResponse.get(0).name
+    fun getDoctors() {
+        doctorsProgressBar.visibility = View.VISIBLE
+        loading = true
+        val dr = DoctorsRequest(
+            this.name,
+            this.specialisation,
+            this.city,
+            this.only_favourites,
+            this.page,
+            this.per_page
+        )
+        DoctorsService().getCollection(dr, this)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun dataReceived(doctorsResponseCollection: List<DoctorsResponse>) {
+        doctorsList.addAll(doctorsResponseCollection)
+        doctorsRecyclerView.layoutManager = doctorsLayoutManager
+        if (this::doctorsAdapter.isInitialized) {
+            doctorsAdapter.notifyDataSetChanged()
+        }
+        else {
+            doctorsAdapter = DoctorsAdapter(doctorsList)
+            doctorsRecyclerView.adapter = doctorsAdapter
+        }
+        doctorsProgressBar.visibility = View.GONE
+        loading = false
     }
 }
