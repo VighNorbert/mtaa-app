@@ -8,9 +8,11 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 
 class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adapter<DoctorsAdapter.DoctorsHolder>() {
@@ -32,12 +34,22 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adap
         holder.doctorNameTextView.text = spannableString
         holder.doctorSpecialisationTextView.text = doctor.specialisation.title
         if (doctor.is_favourite) {
-            holder.doctorStar.rating = 1.0F
+            holder.doctorStar.setImageResource(R.drawable.star_filled)
         }
         else {
-            holder.doctorStar.rating = 0.0F
+            holder.doctorStar.setImageResource(R.drawable.star_unfilled)
         }
-
+        holder.doctorStar.setOnClickListener{
+            if (doctor.is_favourite) {
+                holder.doctorStar.setImageResource(R.drawable.star_unfilled)
+                DoctorsService().removeFromFavourites(doctor.id)
+            }
+            else {
+                holder.doctorStar.setImageResource(R.drawable.star_filled)
+                DoctorsService().addToFavourites(doctor.id)
+            }
+            doctor.is_favourite = !doctor.is_favourite
+        }
     }
 
     override fun getItemCount() = doctorsList.size
@@ -45,6 +57,6 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adap
     class DoctorsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val doctorNameTextView: TextView = view.findViewById(R.id.doctorNameTextView)
         val doctorSpecialisationTextView: TextView = view.findViewById(R.id.doctorSpecialisationTextView)
-        val doctorStar: RatingBar = view.findViewById(R.id.doctorStar)
+        val doctorStar: ImageView = view.findViewById(R.id.doctorStar)
     }
 }

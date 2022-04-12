@@ -53,14 +53,24 @@
             android:orientation="vertical"
             tools:ignore="Suspicious0dp">
 
-            <RatingBar
+<!--            <RatingBar-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="4dp"-->
+<!--                android:id="@+id/doctorStar"-->
+<!--                android:contentDescription="@string/doctors.notfavourite"-->
+<!--                android:numStars="1"-->
+<!--                android:stepSize="1" />-->
+            <ImageView
+                android:id="@+id/doctorStar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:id="@+id/doctorStar"
                 android:contentDescription="@string/doctors.notfavourite"
-                android:numStars="1"
-                android:stepSize="1" />
+                android:clickable="true"
+                android:background="@drawable/star_unfilled"
+                android:focusable="true" />
+
         </LinearLayout>
 
     </LinearLayout>

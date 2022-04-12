@@ -50,8 +50,6 @@ object AuthState {
         if (accessToken != null) {
             return accessToken as String
         }
-        else {
-            return ""
-        }
+        return ""
     }
 }

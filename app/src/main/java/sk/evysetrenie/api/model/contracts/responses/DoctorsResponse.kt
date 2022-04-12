@@ -18,5 +18,5 @@ data class DoctorsResponse(
     val address: String,
     val city: String,
     val description: String,
-    val is_favourite: Boolean
+    var is_favourite: Boolean
 )
