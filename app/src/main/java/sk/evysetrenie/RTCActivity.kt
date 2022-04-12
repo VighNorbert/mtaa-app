@@ -201,7 +201,7 @@ class RTCActivity : AppCompatActivity() {
         rtcClient.initSurfaceView(remoteView)
         rtcClient.initSurfaceView(localView)
         rtcClient.startLocalVideoCapture(localView)
-        signallingClient =  SignalingClient(meetingID,createSignallingClientListener())
+        signallingClient = SignalingClient(meetingID,createSignallingClientListener())
         if (!isJoin)
             rtcClient.call(sdpObserver,meetingID)
     }
@@ -209,6 +209,7 @@ class RTCActivity : AppCompatActivity() {
     private fun createSignallingClientListener() = object : SignalingClientListener {
         override fun onConnectionEstablished() {
             endCallButton.isClickable = true
+            Constants.isCallEnded = false
         }
 
         override fun onOfferReceived(description: SessionDescription) {

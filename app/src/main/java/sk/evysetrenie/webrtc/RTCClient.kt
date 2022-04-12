@@ -88,7 +88,7 @@ class RTCClient(
         val surfaceTextureHelper = SurfaceTextureHelper.create(Thread.currentThread().name, rootEglBase.eglBaseContext)
         (videoCapturer as VideoCapturer).initialize(surfaceTextureHelper, localVideoOutput.context, localVideoSource.capturerObserver)
         videoCapturer.startCapture(320, 240, 60)
-        localAudioTrack = peerConnectionFactory.createAudioTrack(LOCAL_TRACK_ID + "_audio", audioSource);
+        localAudioTrack = peerConnectionFactory.createAudioTrack(LOCAL_TRACK_ID + "_audio", audioSource)
         localVideoTrack = peerConnectionFactory.createVideoTrack(LOCAL_TRACK_ID, localVideoSource)
         localVideoTrack?.addSink(localVideoOutput)
         val localStream = peerConnectionFactory.createLocalMediaStream(LOCAL_STREAM_ID)
@@ -221,6 +221,9 @@ class RTCClient(
     }
 
     fun endCall(meetingID: String) {
+        videoCapturer.stopCapture()
+        localAudioTrack?.dispose()
+        localVideoTrack?.dispose()
         db.collection("calls").document(meetingID).collection("candidates")
                 .get().addOnSuccessListener {
                     val iceCandidateArray: MutableList<IceCandidate> = mutableListOf()
