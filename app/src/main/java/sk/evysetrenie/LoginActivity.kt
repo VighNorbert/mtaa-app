@@ -11,8 +11,6 @@ import sk.evysetrenie.api.AuthService
 import sk.evysetrenie.api.model.contracts.requests.LoginRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 
-@ExperimentalCoroutinesApi
-@ObsoleteCoroutinesApi
 class LoginActivity : BaseActivity() {
 
     private lateinit var emailTextInput: TextInputEditText

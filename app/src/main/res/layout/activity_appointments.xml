@@ -34,20 +34,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="64dp"
                     android:fontFamily="@font/poppins"
-                    android:text="@string/doctors.heading"
+                    android:text="@string/appointments.heading"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="30sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/doctorsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"/>
-
-                <ProgressBar
-                    android:id="@+id/doctorsProgressBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"/>
 
             </LinearLayout>
         </ScrollView>
@@ -58,7 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
-        app:itemTextAppearance="@style/ItemTextAppearance"
         android:layout_gravity="start"
         android:fitsSystemWindows="true" />
 </androidx.drawerlayout.widget.DrawerLayout>

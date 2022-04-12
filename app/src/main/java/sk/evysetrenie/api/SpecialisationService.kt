@@ -4,6 +4,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.*
 import okio.IOException
+import sk.evysetrenie.BaseActivity
 import sk.evysetrenie.SpecialisationReader
 import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
@@ -14,7 +15,7 @@ class SpecialisationService {
 
     private var specialisations: Array<Specialisation>? = null
 
-    fun getAll(activity: SpecialisationReader? = null) {
+    fun getAll(reader: SpecialisationReader? = null, activity: BaseActivity? = null) {
         if (specialisations == null) {
             val request = Request.Builder()
                 .url("https://api.norb.sk/specialisations")
@@ -25,7 +26,7 @@ class SpecialisationService {
             OkHttpClient().newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
-                    activity?.runOnUiThread { activity.showError(ApiError(400)) }
+                    activity?.runOnUiThread { reader?.showError(ApiError(400)) }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -33,14 +34,14 @@ class SpecialisationService {
                         if (!response.isSuccessful) {
                             try {
                                 val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                                activity?.runOnUiThread { activity.showError(error.error) }
+                                activity?.runOnUiThread { reader?.showError(error.error) }
                             } catch (e: Exception) {
-                                activity?.runOnUiThread { activity.showError(ApiError(response.code)) }
+                                activity?.runOnUiThread { reader?.showError(ApiError(response.code)) }
                             }
                         } else {
                             specialisations = Json.decodeFromString<Array<Specialisation>>(response.body!!.string())
                             activity?.runOnUiThread {
-                                activity.getAllSpecialisationSuccess(specialisations!!)
+                                reader?.getAllSpecialisationSuccess(specialisations!!)
                             }
                         }
                     }
@@ -48,7 +49,7 @@ class SpecialisationService {
             })
         } else {
             activity?.runOnUiThread {
-                activity.getAllSpecialisationSuccess(specialisations!!)
+                reader?.getAllSpecialisationSuccess(specialisations!!)
             }
         }
     }

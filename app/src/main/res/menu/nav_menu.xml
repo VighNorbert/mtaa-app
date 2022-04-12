@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_doctors"
+        android:title="@string/menu.doctors"
+        android:icon="@drawable/ic_baseline_doctors_24" />
+
+    <item
+        android:id="@+id/nav_appointments"
+        android:title="@string/menu.appointments"
+        android:icon="@drawable/ic_baseline_appointments_24" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:title="@string/menu.my_profile"
+        android:fontFamily="@font/poppins_medium"
+        android:icon="@drawable/ic_baseline_profile_24" />
+
+</menu>

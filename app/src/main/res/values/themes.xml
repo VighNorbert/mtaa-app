@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!--    <style name="Theme.EVysetrenie" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-    <style name="Theme.EVysetrenie" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.EVysetrenie" parent="Theme.MaterialComponents.Light">
+        <item name="actionBarTheme">@style/TitleBarTextAppearance</item>
 
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
@@ -15,6 +16,17 @@
 
         <item name="materialButtonStyle">@style/PrimaryButton</item>
 
+    </style>
+
+    <style name="TitleBarTextAppearance" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="ItemTextAppearance" parent="">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">

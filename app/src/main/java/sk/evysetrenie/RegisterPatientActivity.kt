@@ -14,7 +14,7 @@ import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.model.contracts.requests.RegisterRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 
-class RegisterPatientActivity : BaseActivity() {
+class RegisterPatientActivity : ReturningActivity() {
 
     private lateinit var nameTextInput: TextInputEditText
     private lateinit var nameTextLayout: TextInputLayout

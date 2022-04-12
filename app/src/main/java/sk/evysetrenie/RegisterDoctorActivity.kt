@@ -28,7 +28,7 @@ import java.lang.Exception
 import kotlin.math.min
 
 
-class RegisterDoctorActivity : SpecialisationReader() {
+class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
 
     private lateinit var nameTextInput: TextInputEditText
     private lateinit var nameTextLayout: TextInputLayout
@@ -184,7 +184,7 @@ class RegisterDoctorActivity : SpecialisationReader() {
         avatarImageView = findViewById(R.id.avatarImageView)
         noAvatarTextView = findViewById(R.id.noAvatarTextView)
 
-        specialisationService.getAll(this)
+        specialisationService.getAll(this, this)
     }
 
     fun onSubmit(x: View) {
