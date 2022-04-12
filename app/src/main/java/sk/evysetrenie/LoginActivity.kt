@@ -37,7 +37,7 @@ class LoginActivity : BaseActivity() {
 
     fun successfulLogin() {
         loadingDialog.dismiss()
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, DoctorsActivity::class.java)
         startActivity(intent)
     }
 

@@ -38,4 +38,9 @@
     <string name="register.doctor.privates">Osobné údaje</string>
     <string name="register.doctor.ambulance">Údaje o ambulancii</string>
 
+    <string name="doctors.heading">Lekári</string>
+    <string name="doctors.favourite">Lekár je obľúbený</string>
+    <string name="doctors.notfavourite">Lekár nie je obľúbený</string>
+
+
 </resources>
