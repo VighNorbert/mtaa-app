@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "595320350296",
+    "project_id": "evysetrenie-6a446",
+    "storage_bucket": "evysetrenie-6a446.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595320350296:android:ea1df0d885d77b8e714c2d",
+        "android_client_info": {
+          "package_name": "sk.evysetrenie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595320350296-bpd15acdhacd9hikcarsquo66pp2t7bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQOhMVoL01Pdrt4ybLXaklPuYRGqGtY7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595320350296-bpd15acdhacd9hikcarsquo66pp2t7bv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
