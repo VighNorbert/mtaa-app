@@ -23,5 +23,7 @@
     <string name="register.patient.heading">Registrácia - pacient</string>
 
     <string name="doctors.heading">Lekári</string>
+    <string name="doctors.favourite">Lekár je obľúbený</string>
+    <string name="doctors.notfavourite">Lekár nie je obľúbený</string>
 
 </resources>

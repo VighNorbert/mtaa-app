@@ -8,6 +8,7 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
@@ -30,6 +31,13 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adap
         spannableString.setSpan(boldSpan, 0, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         holder.doctorNameTextView.text = spannableString
         holder.doctorSpecialisationTextView.text = doctor.specialisation.title
+        if (doctor.is_favourite) {
+            holder.doctorStar.rating = 1.0F
+        }
+        else {
+            holder.doctorStar.rating = 0.0F
+        }
+
     }
 
     override fun getItemCount() = doctorsList.size
@@ -37,5 +45,6 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adap
     class DoctorsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val doctorNameTextView: TextView = view.findViewById(R.id.doctorNameTextView)
         val doctorSpecialisationTextView: TextView = view.findViewById(R.id.doctorSpecialisationTextView)
+        val doctorStar: RatingBar = view.findViewById(R.id.doctorStar)
     }
 }

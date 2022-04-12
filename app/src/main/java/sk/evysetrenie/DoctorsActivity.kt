@@ -59,7 +59,6 @@ class DoctorsActivity : BaseActivity() {
                         }
                     }
                 }
-
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
@@ -101,5 +100,9 @@ class DoctorsActivity : BaseActivity() {
         }
         doctorsProgressBar.visibility = View.GONE
         loading = false
+    }
+
+    fun addDoctorToFavourites(name: String) {
+        println("Added $name")
     }
 }
