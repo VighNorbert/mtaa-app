@@ -1,8 +1,10 @@
 package sk.evysetrenie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import sk.evysetrenie.api.AuthState
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -17,5 +19,11 @@ open class BaseActivity : AppCompatActivity() {
         this.finish()
     }
 
+    fun checkLoggedIn() {
+        if (!AuthState.isLoggedIn()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
 }

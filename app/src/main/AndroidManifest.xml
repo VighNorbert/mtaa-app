@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="sk.evysetrenie">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -42,7 +43,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".RTCActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:exported="true" />
+        <activity android:name=".MyProfileActivity"
+            android:exported="true" />
+        <activity android:name=".AppointmentsActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

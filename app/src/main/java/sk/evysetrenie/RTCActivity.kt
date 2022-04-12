@@ -21,7 +21,7 @@ import sk.evysetrenie.webrtc.*
 
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
-class RTCActivity : AppCompatActivity() {
+class RTCActivity : BaseActivity() {
 
     companion object {
         private const val CAMERA_AUDIO_PERMISSION_REQUEST_CODE = 1

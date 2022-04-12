@@ -4,18 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Adapter
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
-import sk.evysetrenie.api.model.Doctor
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 
-class DoctorsActivity : BaseActivity() {
+class DoctorsActivity : MenuActivity() {
 
     private var name: String? = null
     private var specialisation: Int? = null
@@ -34,11 +31,11 @@ class DoctorsActivity : BaseActivity() {
     private var doctorsList: MutableList<DoctorsResponse> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         checkLoggedOut()
         if (AuthState.isLoggedIn()) {
             setContentView(R.layout.activity_doctors)
         }
+        super.onCreate(savedInstanceState)
 
         doctorsLayoutManager = LinearLayoutManager(this)
         doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)

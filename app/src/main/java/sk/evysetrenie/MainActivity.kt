@@ -16,7 +16,7 @@ import sk.evysetrenie.webrtc.Constants
 
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var textView: TextView
 
     val db = Firebase.firestore

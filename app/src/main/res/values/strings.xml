@@ -4,6 +4,12 @@
     <string name="general.role.patient">Pacient</string>
     <string name="general.role.doctor">Lekár</string>
     <string name="general.back_button">Tlačidlo späť</string>
+    <string name="general.open">Otvoriť</string>
+    <string name="general.close">Zatvoriť</string>
+
+    <string name="menu.doctors">Zoznam lekárov</string>
+    <string name="menu.appointments">Moje vyšetrenia</string>
+    <string name="menu.my_profile">Môj profil</string>
 
     <string name="field.name">Meno</string>
     <string name="field.surname">Priezvisko</string>
@@ -41,6 +47,10 @@
     <string name="doctors.heading">Lekári</string>
     <string name="doctors.favourite">Lekár je obľúbený</string>
     <string name="doctors.notfavourite">Lekár nie je obľúbený</string>
+
+    <string name="appointments.heading">Vyšetrenia</string>
+
+    <string name="my_profile.heading">Môj profil</string>
 
     <string name="pref_speakerphone_key">speakerphone_preference</string>
     <string name="pref_speakerphone_default">auto</string>
