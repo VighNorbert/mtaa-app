@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import sk.evysetrenie.api.AuthService
 import sk.evysetrenie.api.model.contracts.requests.LoginRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
@@ -31,9 +29,6 @@ class LoginActivity : BaseActivity() {
     fun onClickRegister(x: View) {
         println("clicked")
         val intent = Intent(this, RegisterActivity::class.java)
-//        .apply {
-//            putExtra(EXTRA_MESSAGE, message)
-//        }
         startActivity(intent)
     }
 

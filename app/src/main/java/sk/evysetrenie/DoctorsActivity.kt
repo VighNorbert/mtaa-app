@@ -1,7 +1,6 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -31,7 +30,7 @@ class DoctorsActivity : MenuActivity() {
     private var doctorsList: MutableList<DoctorsResponse> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        checkLoggedOut()
+        checkLoggedIn()
         if (AuthState.isLoggedIn()) {
             setContentView(R.layout.activity_doctors)
         }
@@ -63,13 +62,6 @@ class DoctorsActivity : MenuActivity() {
 
     override fun onBackPressed() { }
 
-    private fun checkLoggedOut() {
-        if (!AuthState.isLoggedIn()) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
     fun getDoctors() {
         doctorsProgressBar.visibility = View.VISIBLE
         loading = true
@@ -97,9 +89,5 @@ class DoctorsActivity : MenuActivity() {
         }
         doctorsProgressBar.visibility = View.GONE
         loading = false
-    }
-
-    fun addDoctorToFavourites(name: String) {
-        println("Added $name")
     }
 }

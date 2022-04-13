@@ -3,7 +3,6 @@ package sk.evysetrenie
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -35,6 +34,10 @@ open class MenuActivity : BaseActivity() {
                 R.id.nav_profile ->
                     startActivity(
                         Intent(applicationContext, MyProfileActivity::class.java)
+                    )
+                R.id.nav_webrtc ->
+                    startActivity(
+                        Intent(applicationContext, MainActivity::class.java)
                     )
             }
             true

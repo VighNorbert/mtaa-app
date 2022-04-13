@@ -10,6 +10,7 @@
     <string name="menu.doctors">Zoznam lekárov</string>
     <string name="menu.appointments">Moje vyšetrenia</string>
     <string name="menu.my_profile">Môj profil</string>
+    <string name="menu.webrtc">WebRTC hovor</string>
 
     <string name="field.name">Meno</string>
     <string name="field.surname">Priezvisko</string>
