@@ -1,6 +1,5 @@
 package sk.evysetrenie.api
 
-import android.content.SharedPreferences
 import sk.evysetrenie.api.model.Doctor
 import sk.evysetrenie.api.model.User
 import sk.evysetrenie.api.model.contracts.responses.LoginResponse
@@ -33,6 +32,10 @@ object AuthState {
             return User(loggedInDoctor!!.id, loggedInDoctor!!.name, loggedInDoctor!!.surname, loggedInDoctor!!.email, loggedInDoctor!!.phone)
         }
         return null
+    }
+
+    fun isDoctor(): Boolean? {
+        return isDoctor
     }
 
     fun isLoggedIn() : Boolean {

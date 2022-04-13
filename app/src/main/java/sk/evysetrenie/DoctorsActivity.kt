@@ -2,8 +2,10 @@ package sk.evysetrenie
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.AuthState
@@ -84,7 +86,7 @@ class DoctorsActivity : MenuActivity() {
             doctorsAdapter.notifyDataSetChanged()
         }
         else {
-            doctorsAdapter = DoctorsAdapter(doctorsList)
+            doctorsAdapter = DoctorsAdapter(doctorsList, this)
             doctorsRecyclerView.adapter = doctorsAdapter
         }
         doctorsProgressBar.visibility = View.GONE

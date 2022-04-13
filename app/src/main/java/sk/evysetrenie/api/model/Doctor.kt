@@ -11,9 +11,9 @@ data class Doctor(
     var email: String,
     var phone: String,
     var specialisation: Specialisation,
-    var appointmentsLength: Int,
+    var appointments_length: Int,
     var address: String,
     var city: String,
     var description: String,
-    var isFavourite: Boolean? = null
+    var is_favourite: Boolean? = null
 )

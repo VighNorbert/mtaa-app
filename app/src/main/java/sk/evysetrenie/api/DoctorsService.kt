@@ -1,5 +1,6 @@
 package sk.evysetrenie.api
 
+import android.widget.Toast
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.*
@@ -54,7 +55,7 @@ class DoctorsService {
         })
     }
 
-    fun addToFavourites(doctor_id: Int) {
+    fun addToFavourites(doctor_id: Int, activity: DoctorsActivity) {
         println("Adding $doctor_id")
         val body = "{}".toRequestBody()
         val weburl = "https://api.norb.sk/doctor/$doctor_id/favourite"
@@ -65,10 +66,10 @@ class DoctorsService {
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .addHeader("Content-Type", "application/json")
             .build()
-        sendFavouritesRequest(request)
+        sendFavouritesRequest(request, activity)
     }
 
-    fun removeFromFavourites(doctor_id: Int) {
+    fun removeFromFavourites(doctor_id: Int, activity: DoctorsActivity) {
         val weburl = "https://api.norb.sk/doctor/$doctor_id/favourite"
         val request = Request.Builder()
             .url(weburl)
@@ -77,10 +78,10 @@ class DoctorsService {
             .addHeader("accept", "*/*")
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .build()
-        sendFavouritesRequest(request)
+        sendFavouritesRequest(request, activity)
     }
 
-    fun sendFavouritesRequest(request: Request) {
+    fun sendFavouritesRequest(request: Request, activity: DoctorsActivity) {
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
@@ -97,7 +98,11 @@ class DoctorsService {
 //                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
                         }
                     } else {
-//                        activity.runOnUiThread { activity.dataReceived(res) }
+                        activity.runOnUiThread {
+                            Toast.makeText(activity.applicationContext, "novy favorit pridany", Toast.LENGTH_SHORT).show()
+//                            activity.dataReceived(res)
+                        }
+
                     }
                 }
             }

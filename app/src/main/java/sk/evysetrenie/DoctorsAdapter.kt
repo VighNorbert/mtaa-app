@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 
-class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adapter<DoctorsAdapter.DoctorsHolder>() {
+class DoctorsAdapter(val doctorsList: List<DoctorsResponse>, val activity: DoctorsActivity) : RecyclerView.Adapter<DoctorsAdapter.DoctorsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorsHolder {
         return DoctorsHolder(
@@ -41,11 +41,11 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>) : RecyclerView.Adap
         holder.doctorStar.setOnClickListener{
             if (doctor.is_favourite) {
                 holder.doctorStar.setImageResource(R.drawable.star_unfilled)
-                DoctorsService().removeFromFavourites(doctor.id)
+                DoctorsService().removeFromFavourites(doctor.id, activity)
             }
             else {
                 holder.doctorStar.setImageResource(R.drawable.star_filled)
-                DoctorsService().addToFavourites(doctor.id)
+                DoctorsService().addToFavourites(doctor.id, activity)
             }
             doctor.is_favourite = !doctor.is_favourite
         }

@@ -9,4 +9,8 @@ data class User(
     val surname: String,
     val email: String,
     val phone: String
-)
+) {
+    fun getFullName(): String {
+        return "$name $surname"
+    }
+}
