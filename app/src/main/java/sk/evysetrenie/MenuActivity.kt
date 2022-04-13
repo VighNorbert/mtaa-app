@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import sk.evysetrenie.api.AuthState
 
 open class MenuActivity : BaseActivity() {
 
@@ -14,33 +15,40 @@ open class MenuActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
-        val navView: NavigationView = findViewById(R.id.navView)
+        if (AuthState.isLoggedIn()) {
+            val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
+            val navView: NavigationView = findViewById(R.id.navView)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.general_open, R.string.general_close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        navView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.nav_doctors ->
-                    startActivity(
-                        Intent(applicationContext, DoctorsActivity::class.java)
-                    )
-                R.id.nav_appointments ->
-                    startActivity(
-                        Intent(applicationContext, AppointmentsActivity::class.java)
-                    )
-                R.id.nav_profile ->
-                    startActivity(
-                        Intent(applicationContext, MyProfileActivity::class.java)
-                    )
-                R.id.nav_webrtc ->
-                    startActivity(
-                        Intent(applicationContext, MainActivity::class.java)
-                    )
+            toggle = ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.general_open,
+                R.string.general_close
+            )
+            drawerLayout.addDrawerListener(toggle)
+            toggle.syncState()
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            navView.setNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.nav_doctors ->
+                        startActivity(
+                            Intent(applicationContext, DoctorsActivity::class.java)
+                        )
+                    R.id.nav_appointments ->
+                        startActivity(
+                            Intent(applicationContext, AppointmentsActivity::class.java)
+                        )
+                    R.id.nav_profile ->
+                        startActivity(
+                            Intent(applicationContext, MyProfileActivity::class.java)
+                        )
+                    R.id.nav_webrtc ->
+                        startActivity(
+                            Intent(applicationContext, MainActivity::class.java)
+                        )
+                }
+                true
             }
-            true
         }
     }
 

@@ -18,12 +18,13 @@ class MainActivity : MenuActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         checkLoggedIn()
         if (AuthState.isLoggedIn()) {
             setContentView(R.layout.activity_main)
+        }
+        super.onCreate(savedInstanceState)
 
+        if (AuthState.isLoggedIn()) {
             startMeeting = findViewById(R.id.start_meeting)
             meetingIdInput = findViewById(R.id.meeting_id)
 
