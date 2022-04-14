@@ -9,6 +9,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import sk.evysetrenie.DoctorsActivity
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
+import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
 
@@ -25,6 +26,7 @@ class DoctorsService {
             .addQueryParameter("page", doctorsRequest.page.toString())
             .addQueryParameter("per_page", doctorsRequest.per_page.toString())
         val url = urlBuilder.build()
+        println(url)
         val request = Request.Builder()
             .url(url)
             .addHeader("accept", "application/json")
@@ -34,7 +36,7 @@ class DoctorsService {
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
-//                activity.runOnUiThread { activity.showError(ApiError(400)) }
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -42,9 +44,9 @@ class DoctorsService {
                     if (!response.isSuccessful) {
                         try {
                             val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-//                            activity.runOnUiThread { activity.showError(error.error) }
+                            activity.runOnUiThread { activity.showError(error.error) }
                         } catch (e: Exception) {
-//                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
                         }
                     } else {
                         val res = Json.decodeFromString<List<DoctorsResponse>>(response.body!!.string())
@@ -66,7 +68,7 @@ class DoctorsService {
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .addHeader("Content-Type", "application/json")
             .build()
-        sendFavouritesRequest(request, activity)
+        sendFavouritesRequest(request, activity, true)
     }
 
     fun removeFromFavourites(doctor_id: Int, activity: DoctorsActivity) {
@@ -78,14 +80,14 @@ class DoctorsService {
             .addHeader("accept", "*/*")
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .build()
-        sendFavouritesRequest(request, activity)
+        sendFavouritesRequest(request, activity, false)
     }
 
-    fun sendFavouritesRequest(request: Request, activity: DoctorsActivity) {
+    fun sendFavouritesRequest(request: Request, activity: DoctorsActivity, add: Boolean) {
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
-//                activity.runOnUiThread { activity.showError(ApiError(400)) }
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -93,14 +95,18 @@ class DoctorsService {
                     if (!response.isSuccessful) {
                         try {
                             val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-//                            activity.runOnUiThread { activity.showError(error.error) }
+                            activity.runOnUiThread { activity.showError(error.error) }
                         } catch (e: Exception) {
-//                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
                         }
                     } else {
                         activity.runOnUiThread {
-                            Toast.makeText(activity.applicationContext, "novy favorit pridany", Toast.LENGTH_SHORT).show()
-//                            activity.dataReceived(res)
+                            if (add) {
+                                Toast.makeText(activity.applicationContext, "Lekár bol pridaný", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                Toast.makeText(activity.applicationContext, "Lekár bol odobraný", Toast.LENGTH_SHORT).show()
+                            }
                         }
 
                     }

@@ -27,30 +27,172 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="64dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/doctors.heading"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="30sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="64dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@string/doctors.heading"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="30sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <Button
+                        android:id="@+id/doctorsFiltersButtonTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
+                        android:layout_marginEnd="32dp"
+                        android:paddingHorizontal="24dp"
+                        android:backgroundTint="@color/primaryColor"
+                        android:onClick="onFiltersClick"
+                        android:text="@string/doctors.filters"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/doctorsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"/>
+                    android:layout_marginTop="32dp"/>
 
                 <ProgressBar
                     android:id="@+id/doctorsProgressBar"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"/>
+                    android:layout_height="48dp" />
 
             </LinearLayout>
+
         </ScrollView>
+
+        <TextView
+            android:id="@+id/doctorsFiltersButtonBottom"
+            style="@style/PopupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onFiltersClick"
+            android:paddingVertical="16dp"
+            android:text="@string/doctors.filters"
+            app:layout_constraintBottom_toTopOf="@+id/doctorsFilterLayout" />
+
+        <LinearLayout
+            android:id="@+id/doctorsFilterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryShadeColor"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/doctorNameInputLayout"
+                style="@style/FilledRoundedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingVertical="8dp"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#757575"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/doctorNameInputText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/doctors.name"
+                    android:textColor="#757575" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/doctorSpecialisationInputLayout"
+                style="@style/FilledDropdownRoundedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#757575"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/doctorSpecialisationInputText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/field.specialisation"
+                    android:inputType="none"
+                    tools:ignore="TextContrastCheck"
+                    android:textColor="#757575" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/doctorCityInputLayout"
+                style="@style/FilledRoundedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingVertical="8dp"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#757575"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/doctorCityInputText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/field.city"
+                    android:textColor="#757575" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/doctorOnlyFavouritesCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:buttonTint="@color/design_default_color_background"
+                android:text="@string/doctors.only_favourites"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/doctorsFiltersButtonSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="32dp"
+                android:paddingVertical="16dp"
+                android:backgroundTint="@color/primaryColor"
+                android:onClick="onFiltersSubmit"
+                android:text="@string/doctors.filtersSubmit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

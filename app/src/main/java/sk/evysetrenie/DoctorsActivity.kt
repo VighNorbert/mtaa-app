@@ -4,16 +4,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
+import sk.evysetrenie.api.SpecialisationService
+import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
+import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 
-class DoctorsActivity : MenuActivity() {
+class DoctorsActivity : MenuActivity(), SpecialisationReader {
 
     private var name: String? = null
     private var specialisation: Int? = null
@@ -28,6 +32,14 @@ class DoctorsActivity : MenuActivity() {
     private lateinit var doctorsAdapter: DoctorsAdapter
     private lateinit var doctorsRecyclerView: RecyclerView
     private lateinit var doctorsProgressBar: ProgressBar
+    private lateinit var doctorsFilterLayout: LinearLayout
+
+    private lateinit var doctorNameInputText: TextView
+    private lateinit var doctorSpecialisationInputText: TextView
+    private lateinit var doctorCityInputText: TextView
+    private lateinit var doctorOnlyFavouritesCheckBox: CheckBox
+
+    private lateinit var specialisationService: SpecialisationService
 
     private var doctorsList: MutableList<DoctorsResponse> = ArrayList()
 
@@ -41,6 +53,14 @@ class DoctorsActivity : MenuActivity() {
         doctorsLayoutManager = LinearLayoutManager(this)
         doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)
         doctorsProgressBar = findViewById(R.id.doctorsProgressBar)
+        doctorsFilterLayout = findViewById(R.id.doctorsFilterLayout)
+
+        doctorNameInputText = findViewById(R.id.doctorNameInputText)
+        doctorSpecialisationInputText = findViewById(R.id.doctorSpecialisationInputText)
+        doctorCityInputText = findViewById(R.id.doctorCityInputText)
+        doctorOnlyFavouritesCheckBox = findViewById(R.id.doctorOnlyFavouritesCheckBox)
+
+        specialisationService = SpecialisationService()
 
         getDoctors()
         doctorsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -60,6 +80,7 @@ class DoctorsActivity : MenuActivity() {
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
+        specialisationService.getAll(this, this)
     }
 
     override fun onBackPressed() { }
@@ -91,5 +112,44 @@ class DoctorsActivity : MenuActivity() {
         }
         doctorsProgressBar.visibility = View.GONE
         loading = false
+    }
+
+    fun onFiltersClick(x: View) {
+        if (doctorsFilterLayout.isVisible) {
+            doctorsFilterLayout.visibility = View.GONE
+        }
+        else {
+            doctorsFilterLayout.visibility = View.VISIBLE
+        }
+    }
+
+    fun onFiltersSubmit(x: View) {
+        loadingDialog.open()
+        if (doctorNameInputText.text.isNotEmpty()) {
+            name = doctorNameInputText.text.toString()
+        }
+        if (doctorSpecialisationInputText.text.isNotEmpty()) {
+            specialisation = specialisationService.getByTitle(doctorSpecialisationInputText.text.toString())!!.id
+        }
+        if (doctorCityInputText.text.isNotEmpty()) {
+            city = doctorCityInputText.text.toString()
+        }
+        only_favourites = doctorOnlyFavouritesCheckBox.isChecked
+        page = 1
+        doctorsList.clear()
+        getDoctors()
+        doctorsFilterLayout.visibility = View.GONE
+        loadingDialog.dismiss()
+    }
+
+    override fun getAllSpecialisationSuccess(specialisations: Array<Specialisation>) {
+        val specialisationItems: List<String> = specialisations.map { s: Specialisation -> s.title }
+        val adapter = ArrayAdapter(this, R.layout.list_item, specialisationItems)
+        (doctorSpecialisationInputText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    override fun showError(error: ApiError) {
+        doctorsProgressBar.visibility = View.GONE;
+        Toast.makeText(this.applicationContext, error.message, Toast.LENGTH_SHORT).show()
     }
 }

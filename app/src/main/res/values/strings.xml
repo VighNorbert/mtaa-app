@@ -48,6 +48,10 @@
     <string name="doctors.heading">Lekári</string>
     <string name="doctors.favourite">Lekár je obľúbený</string>
     <string name="doctors.notfavourite">Lekár nie je obľúbený</string>
+    <string name="doctors.filters">Filtrovanie</string>
+    <string name="doctors.name">Meno lekára</string>
+    <string name="doctors.only_favourites">Zobraziť iba obľúbených lekárov</string>
+    <string name="doctors.filtersSubmit">Filtrovať</string>
 
     <string name="appointments.heading">Vyšetrenia</string>
 
