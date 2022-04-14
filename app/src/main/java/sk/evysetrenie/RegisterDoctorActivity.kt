@@ -199,7 +199,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
     }
 
     fun addNewWorkSchedule(x : View) {
-        workSchedulesAdapter.addItem(WorkSchedule(0, "16:00", "18:00"))
+        workSchedulesAdapter.addItem(WorkSchedule(0, "08:00:00", "16:00:00"))
     }
 
     fun onSubmit(x: View) {
@@ -226,7 +226,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
                 addressTextInput.text.toString(),
                 cityTextInput.text.toString(),
                 descriptionTextInput.text.toString(),
-                emptyList(),
+                workSchedulesList,
                 avatar
             )
             AuthService().registerDoctor(rr, this)

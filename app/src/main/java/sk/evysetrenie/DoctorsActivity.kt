@@ -83,7 +83,7 @@ class DoctorsActivity : MenuActivity() {
         doctorsList.addAll(doctorsResponseCollection)
         doctorsRecyclerView.layoutManager = doctorsLayoutManager
         if (this::doctorsAdapter.isInitialized) {
-            doctorsAdapter.notifyDataSetChanged()
+            doctorsAdapter.notifyItemRangeInserted(doctorsList.size - doctorsResponseCollection.size, doctorsResponseCollection.size)
         }
         else {
             doctorsAdapter = DoctorsAdapter(doctorsList, this)

@@ -23,6 +23,7 @@
     <string name="field.city">Mesto</string>
     <string name="field.description">Popis</string>
     <string name="field.appointments_length">Dĺžka jedného vyšetrenia</string>
+    <string name="field.appointments_length.helper">V minútach</string>
     <string name="field.work_schedules">Ordinačné hodiny</string>
     <string name="field.day">Deň</string>
     <string name="field.time_from">Od</string>
