@@ -1,9 +1,11 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -124,22 +126,33 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
     }
 
     fun onFiltersSubmit(x: View) {
-        loadingDialog.open()
         if (doctorNameInputText.text.isNotEmpty()) {
             name = doctorNameInputText.text.toString()
+        } else {
+            name = null
         }
         if (doctorSpecialisationInputText.text.isNotEmpty()) {
             specialisation = specialisationService.getByTitle(doctorSpecialisationInputText.text.toString())!!.id
+        } else {
+            specialisation = null
         }
         if (doctorCityInputText.text.isNotEmpty()) {
             city = doctorCityInputText.text.toString()
+        } else {
+            city = null
         }
         only_favourites = doctorOnlyFavouritesCheckBox.isChecked
         page = 1
         doctorsList.clear()
+        doctorsAdapter.notifyDataSetChanged()
+        x.hideKeyboard()
         getDoctors()
         doctorsFilterLayout.visibility = View.GONE
-        loadingDialog.dismiss()
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     override fun getAllSpecialisationSuccess(specialisations: Array<Specialisation>) {
