@@ -14,6 +14,8 @@ import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.scale
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import sk.evysetrenie.api.AuthService
@@ -21,8 +23,10 @@ import sk.evysetrenie.api.SpecialisationService
 import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.model.Avatar
 import sk.evysetrenie.api.model.Specialisation
+import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
+import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 import kotlin.math.min
@@ -71,6 +75,10 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
     private val validator: Validator = Validator()
 
     private var base64string : String? = null
+
+    private var workSchedulesList: MutableList<WorkSchedule> = ArrayList()
+    private lateinit var workSchedulesAdapter: WorkSchedulesAdapter
+    private lateinit var workSchedulesRecyclerView: RecyclerView
 
     private lateinit var specialisationService: SpecialisationService
 
@@ -177,7 +185,10 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
         appointmentsLengthTextLayout = findViewById(R.id.appointmentsLengthTextLayout)
         appointmentsLengthTextInput.addTextChangedListener(TextFieldValidation(appointmentsLengthTextInput))
 
-        // TODO add dynamic work schedules form
+        workSchedulesAdapter = WorkSchedulesAdapter(workSchedulesList, this)
+        workSchedulesRecyclerView = findViewById(R.id.workSchedulesRecyclerView)
+        workSchedulesRecyclerView.layoutManager = LinearLayoutManager(this)
+        workSchedulesRecyclerView.adapter = workSchedulesAdapter
 
         errorAlert = findViewById(R.id.errorAlert)
 
@@ -185,6 +196,10 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
         noAvatarTextView = findViewById(R.id.noAvatarTextView)
 
         specialisationService.getAll(this, this)
+    }
+
+    fun addNewWorkSchedule(x : View) {
+        workSchedulesAdapter.addItem(WorkSchedule(0, "16:00", "18:00"))
     }
 
     fun onSubmit(x: View) {
