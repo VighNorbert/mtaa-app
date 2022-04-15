@@ -58,6 +58,10 @@
     <string name="doctors.name">Meno lekára</string>
     <string name="doctors.only_favourites">Zobraziť iba obľúbených lekárov</string>
     <string name="doctors.filtersSubmit">Filtrovať</string>
+    <string name="doctors.no_results">Pre zadané kritériá neboli nájdené žiadne výsledky</string>
+
+    <string name="detail.make_appointment">Objednať sa na vyšetrenie</string>
+    <string name="detail.next">Ďalej</string>
 
     <string name="appointments.heading">Vyšetrenia</string>
 

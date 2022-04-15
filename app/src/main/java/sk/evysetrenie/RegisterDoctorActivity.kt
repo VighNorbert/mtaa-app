@@ -114,6 +114,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
         loadingDialog.open()
         Thread {
             println("OK")
+            println(uri)
             if (uri !== null) {
                 println("URI OK")
                 try {

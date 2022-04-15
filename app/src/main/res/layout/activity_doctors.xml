@@ -23,6 +23,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
+                android:id="@+id/detailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -42,17 +43,19 @@
                         android:textColor="@color/primaryTextColor"
                         android:textSize="30sp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
                         android:id="@+id/doctorsFiltersButtonTop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="64dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"
                         android:backgroundTint="@color/primaryColor"
+                        android:drawableStart="@drawable/search"
+                        android:drawablePadding="8dp"
                         android:onClick="onFiltersClick"
-                        android:paddingHorizontal="24dp"
+                        android:paddingHorizontal="16dp"
                         android:text="@string/doctors.filters"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -61,33 +64,58 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <TextView
+                    android:id="@+id/doctorsNoResultsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="64dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_horizontal"
+                    android:text="@string/doctors.no_results"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/doctorsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="32dp"/>
+                    android:layout_marginTop="32dp" />
 
                 <ProgressBar
                     android:id="@+id/doctorsProgressBar"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp" />
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="128dp"/>
 
             </LinearLayout>
 
         </ScrollView>
 
-        <TextView
-            android:id="@+id/doctorsFiltersButtonBottom"
-            style="@style/PopupButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onFiltersClick"
-            android:paddingVertical="16dp"
-            android:text="@string/doctors.filters"
-            app:layout_constraintBottom_toTopOf="@+id/doctorsFilterLayout" />
+            style="@style/PopupButton"
+            app:layout_constraintBottom_toTopOf="@+id/detailAppointmentLayout"
+            android:gravity="center_horizontal"
+            android:onClick="onFiltersClick">
+
+            <TextView
+                android:id="@+id/detailMakeAppointmentButtonBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/PopupButton"
+                android:paddingVertical="16dp"
+                android:text="@string/doctors.filters"
+                android:drawableStart="@drawable/search"
+                android:drawablePadding="8dp"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/doctorsFilterLayout"
+            android:id="@+id/detailAppointmentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primaryShadeColor"
@@ -177,7 +205,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/doctorsFiltersButtonSubmit"
+                android:id="@+id/detailAppointmentNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

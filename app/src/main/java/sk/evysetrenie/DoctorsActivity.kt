@@ -2,15 +2,14 @@ package sk.evysetrenie
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.SpecialisationService
@@ -19,7 +18,7 @@ import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 
-class DoctorsActivity : MenuActivity(), SpecialisationReader {
+open class DoctorsActivity : MenuActivity(), SpecialisationReader, FavouriteSetter {
 
     private var name: String? = null
     private var specialisation: Int? = null
@@ -32,6 +31,7 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
 
     private lateinit var doctorsLayoutManager: LinearLayoutManager
     private lateinit var doctorsAdapter: DoctorsAdapter
+    private lateinit var doctorsNoResultTextView: TextView
     private lateinit var doctorsRecyclerView: RecyclerView
     private lateinit var doctorsProgressBar: ProgressBar
     private lateinit var doctorsFilterLayout: LinearLayout
@@ -53,9 +53,10 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
         super.onCreate(savedInstanceState)
 
         doctorsLayoutManager = LinearLayoutManager(this)
+        doctorsNoResultTextView = findViewById(R.id.doctorsNoResultsTextView)
         doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)
         doctorsProgressBar = findViewById(R.id.doctorsProgressBar)
-        doctorsFilterLayout = findViewById(R.id.doctorsFilterLayout)
+        doctorsFilterLayout = findViewById(R.id.detailAppointmentLayout)
 
         doctorNameInputText = findViewById(R.id.doctorNameInputText)
         doctorSpecialisationInputText = findViewById(R.id.doctorSpecialisationInputText)
@@ -104,6 +105,12 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
     @SuppressLint("NotifyDataSetChanged")
     fun dataReceived(doctorsResponseCollection: List<DoctorsResponse>) {
         doctorsList.addAll(doctorsResponseCollection)
+        if (doctorsList.isEmpty()) {
+            doctorsNoResultTextView.visibility = View.VISIBLE
+        }
+        else {
+            doctorsNoResultTextView.visibility = View.GONE
+        }
         doctorsRecyclerView.layoutManager = doctorsLayoutManager
         if (this::doctorsAdapter.isInitialized) {
             doctorsAdapter.notifyItemRangeInserted(doctorsList.size - doctorsResponseCollection.size, doctorsResponseCollection.size)
@@ -125,6 +132,7 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun onFiltersSubmit(x: View) {
         if (doctorNameInputText.text.isNotEmpty()) {
             name = doctorNameInputText.text.toString()
@@ -159,6 +167,12 @@ class DoctorsActivity : MenuActivity(), SpecialisationReader {
         val specialisationItems: List<String> = specialisations.map { s: Specialisation -> s.title }
         val adapter = ArrayAdapter(this, R.layout.list_item, specialisationItems)
         (doctorSpecialisationInputText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    fun getDoctorDetail(id: Int) {
+        val intent = Intent(this, DoctorsDetailActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 
     override fun showError(error: ApiError) {

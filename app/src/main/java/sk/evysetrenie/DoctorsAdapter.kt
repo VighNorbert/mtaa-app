@@ -1,6 +1,7 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
@@ -38,14 +40,19 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>, val activity: Docto
         else {
             holder.doctorStar.setImageResource(R.drawable.star_unfilled)
         }
+        holder.doctorNameTextView.setOnClickListener{
+            activity.getDoctorDetail(doctor.id)
+        }
         holder.doctorStar.setOnClickListener{
             if (doctor.is_favourite) {
                 holder.doctorStar.setImageResource(R.drawable.star_unfilled)
-                DoctorsService().removeFromFavourites(doctor.id, activity)
+                holder.doctorStar.contentDescription = "Lekár nie je obľúbený"
+                DoctorsService().removeFromFavourites(doctor.id, activity, activity)
             }
             else {
                 holder.doctorStar.setImageResource(R.drawable.star_filled)
-                DoctorsService().addToFavourites(doctor.id, activity)
+                holder.doctorStar.contentDescription = "Lekár je obľúbený"
+                DoctorsService().addToFavourites(doctor.id, activity, activity)
             }
             doctor.is_favourite = !doctor.is_favourite
         }
