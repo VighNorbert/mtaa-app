@@ -8,6 +8,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import sk.evysetrenie.LoginActivity
+import sk.evysetrenie.MyProfileActivity
 import sk.evysetrenie.RegisterDoctorActivity
 import sk.evysetrenie.RegisterPatientActivity
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
@@ -117,6 +118,42 @@ class AuthService {
                     } else {
                         Json.decodeFromString<RegisterResponse>(response.body!!.string())
                         activity.runOnUiThread { activity.successfulRegistration() }
+                    }
+                }
+            }
+        })
+    }
+
+    fun editProfile(registerDoctorRequest: RegisterDoctorRequest, activity: MyProfileActivity) {
+        val body = Json.encodeToString(registerDoctorRequest)
+
+        println(body.replace(",\"",",\n\""))
+        println(body.length)
+
+        val request = Request.Builder()
+            .url("https://api.norb.sk/profile")
+            .method("PUT", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
+            .addHeader("accept", "application/json")
+            .addHeader("x-auth-token", AuthState.getAccessToken())
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        try {
+                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                            activity.runOnUiThread { activity.showError(error.error) }
+                        } catch (e: Exception) {
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        }
+                    } else {
+                        activity.runOnUiThread { activity.successfullyChanged() }
                     }
                 }
             }

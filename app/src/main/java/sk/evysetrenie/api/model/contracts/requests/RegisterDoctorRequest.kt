@@ -11,12 +11,12 @@ data class RegisterDoctorRequest(
     val title: String,
     val email: String,
     val phone: String,
-    val password: String,
+    val password: String?,
     val specialisation_id: Int,
     val appointments_length: Int,
     val address: String,
     val city: String,
     val description: String,
-    val schedules: List<WorkSchedule>,
+    val schedules: List<WorkSchedule>?,
     val avatar: Avatar? = null
 )

@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerLayout"
-    tools:context=".DoctorsActivity">
+    tools:context=".MyProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +37,401 @@
                     android:textColor="@color/primaryTextColor"
                     android:textSize="30sp" />
 
+                <ImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:contentDescription="@string/register.doctor.photo"
+                    android:visibility="gone"
+                    tools:ignore="ImageContrastCheck"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/noAvatarTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/register.doctor.no_photo"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button"
+                    style="@style/SecondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:onClick="onUpload"
+                    android:text="@string/register.doctor.choose_photo" />
+
+                <TextView
+                    android:id="@+id/heading2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/register.doctor.logins"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/errorAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/alert_danger"
+                    android:textColor="@color/alertTextColor"
+                    android:visibility="gone" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.email"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.password"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/heading3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/register.doctor.privates"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="22sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/titleTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/titleTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.title"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nameTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nameTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.name"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/surnameTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surnameTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.surname"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.phone"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/heading4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/register.doctor.ambulance"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="22sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/specialisationTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/specialisationTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.specialisation"
+                        android:inputType="none"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/addressTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/addressTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.address"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cityTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cityTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.city"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/descriptionTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/descriptionTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.description"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/appointmentsLengthTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/appointmentsLengthTextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/field.appointments_length"
+                        app:helperText="@string/field.appointments_length.helper"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp">
+
+                    <TextView
+                        android:id="@+id/heading5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="@string/field.work_schedules"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/addWorkScheduleButton"
+                        style="@style/SecondaryButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="addNewWorkSchedule"
+                        android:text="@string/buttons.add"
+                        android:textAllCaps="false"
+                        android:layout_margin="0dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_profile.edited_appointments"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/workSchedulesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/registerButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:onClick="onSubmit"
+                    android:text="@string/buttons.save_changes"
+                    android:textAllCaps="false" />
+
+
             </LinearLayout>
         </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

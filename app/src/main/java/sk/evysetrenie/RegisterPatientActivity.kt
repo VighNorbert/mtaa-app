@@ -79,6 +79,7 @@ class RegisterPatientActivity : ReturningActivity() {
             && validator.validateRequired(surnameTextInput, surnameTextLayout, getString(R.string.field_surname))
             && validator.validateEmail(emailTextInput, emailTextLayout, getString(R.string.field_email))
             && validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
+            && validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
             && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
     }
 
@@ -103,6 +104,8 @@ class RegisterPatientActivity : ReturningActivity() {
                     validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
                 }
                 R.id.passwordTextInput -> {
+                    validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
+                    &&
                     validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
                 }
             }

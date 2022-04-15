@@ -1,19 +1,11 @@
 package sk.evysetrenie
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Base64
 import android.view.View
 import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.scale
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -26,13 +18,9 @@ import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
-import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
-import java.io.ByteArrayOutputStream
-import java.lang.Exception
-import kotlin.math.min
 
 
-class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
+class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, ProfileEditor {
 
     private lateinit var nameTextInput: TextInputEditText
     private lateinit var nameTextLayout: TextInputLayout
@@ -74,7 +62,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
 
     private val validator: Validator = Validator()
 
-    private var base64string : String? = null
+    override var base64string : String? = null
 
     private var workSchedulesList: MutableList<WorkSchedule> = ArrayList()
     private lateinit var workSchedulesAdapter: WorkSchedulesAdapter
@@ -82,69 +70,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
 
     private lateinit var specialisationService: SpecialisationService
 
-    // https://www.android--code.com/2020/06/android-kotlin-bitmap-crop-square.html
-    private fun Bitmap.toSquare():Bitmap{
-        // get the small side of bitmap
-        val side = min(width,height)
-
-        // calculate the x and y offset
-        val xOffset = (width - side) /2
-        val yOffset = (height - side)/2
-
-        // create a square bitmap
-        // a square is closed, two dimensional shape with 4 equal sides
-        return Bitmap.createBitmap(
-            this, // source bitmap
-            xOffset, // x coordinate of the first pixel in source
-            yOffset, // y coordinate of the first pixel in source
-            side, // width
-            side // height
-        ).scale(400, 400)
-    }
-
-    private fun Bitmap.toBase64String(): String {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        this.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream)
-        val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-    }
-
-    // https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media#accessing-stored-media
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        loadingDialog.open()
-        Thread {
-            println("OK")
-            println(uri)
-            if (uri !== null) {
-                println("URI OK")
-                try {
-                    var bitmap = if (Build.VERSION.SDK_INT > 27) {
-                        // on newer versions of Android, use the new decodeBitmap method
-                        val source: ImageDecoder.Source =
-                            ImageDecoder.createSource(this.contentResolver, uri)
-                        ImageDecoder.decodeBitmap(source)
-                    } else {
-                        // support older versions of Android by using getBitmap
-                        MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-                    }
-
-                    bitmap = bitmap.toSquare()
-                    this.runOnUiThread {
-                        avatarImageView.setImageBitmap(bitmap)
-                        avatarImageView.visibility = View.VISIBLE
-                        noAvatarTextView.visibility = View.GONE
-                    }
-
-                    base64string = bitmap.toBase64String()
-                    println("BASE64: " + base64string!!.length)
-
-                } catch (err: Exception) {
-                    err.printStackTrace()
-                }
-            }
-            runOnUiThread { loadingDialog.dismiss() }
-        }.start()
-    }
+    private lateinit var imageManager : ImageManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,6 +123,8 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
         noAvatarTextView = findViewById(R.id.noAvatarTextView)
 
         specialisationService.getAll(this, this)
+
+        imageManager = ImageManager(this, avatarImageView, noAvatarTextView)
     }
 
     fun addNewWorkSchedule(x : View) {
@@ -235,7 +163,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
     }
 
     fun onUpload(x: View) {
-        resultLauncher.launch("image/*")
+        imageManager.resultLauncher.launch("image/*")
     }
 
     private fun isValidForm(): Boolean {
@@ -243,6 +171,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
             && validator.validateRequired(surnameTextInput, surnameTextLayout, getString(R.string.field_surname))
             && validator.validateEmail(emailTextInput, emailTextLayout, getString(R.string.field_email))
             && validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
+            && validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
             && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
     }
 
@@ -270,6 +199,8 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader {
                     validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
                 }
                 R.id.passwordTextInput -> {
+                    validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
+                    &&
                     validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
                 }
                 R.id.specialisationTextView -> {

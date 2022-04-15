@@ -19,7 +19,7 @@ import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 
-class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
+class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader {
 
     private var isFavourite: Boolean = false
 
@@ -78,10 +78,8 @@ class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
         }
     }
 
-    override fun onBackPressed() { }
-
     @SuppressLint("SetTextI18n")
-    fun dataReceived(doctor: DoctorsDetailResponse) {
+    override fun dataReceived(doctor: DoctorsDetailResponse) {
         val name = "${doctor.title} ${doctor.name} ${doctor.surname}"
         val spannableString = SpannableString(name)
         val boldSpan = StyleSpan(Typeface.BOLD)
