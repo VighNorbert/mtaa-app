@@ -1,7 +1,12 @@
 package sk.evysetrenie
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -20,7 +25,13 @@ class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
 
     private lateinit var doctorAvatarImageView: ImageView
     private lateinit var doctorStar: ImageView
-    private lateinit var heading: TextView
+    private lateinit var doctorNameText: TextView
+    private lateinit var doctorSpecialisationText: TextView
+    private lateinit var doctorScheduleText: TextView
+    private lateinit var doctorAddressText: TextView
+    private lateinit var doctorContactText: TextView
+    private lateinit var doctorDescriptionText: TextView
+
     private lateinit var detailAppointmentLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +43,13 @@ class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
 
         doctorAvatarImageView = findViewById(R.id.doctorAvatarImageView)
         doctorStar = findViewById(R.id.doctorStar)
-        heading = findViewById(R.id.nadpis)
+        doctorNameText = findViewById(R.id.doctorNameText)
+        doctorSpecialisationText = findViewById(R.id.doctorSpecialisationText)
+        doctorScheduleText = findViewById(R.id.doctorScheduleText)
+        doctorAddressText = findViewById(R.id.doctorAddressText)
+        doctorContactText = findViewById(R.id.doctorContactText)
+        doctorDescriptionText = findViewById(R.id.doctorDescriptionText)
+
         detailAppointmentLayout = findViewById(R.id.detailAppointmentLayout)
 
         val b: Bundle? = intent.extras
@@ -63,8 +80,18 @@ class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
 
     override fun onBackPressed() { }
 
+    @SuppressLint("SetTextI18n")
     fun dataReceived(doctor: DoctorsDetailResponse) {
-        heading.text = doctor.title + " " + doctor.name + " " + doctor.surname
+        val name = "${doctor.title} ${doctor.name} ${doctor.surname}"
+        val spannableString = SpannableString(name)
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        spannableString.setSpan(boldSpan, 0, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        doctorNameText.text = spannableString
+        doctorSpecialisationText.text = doctor.specialisation.title
+        doctorScheduleText.text = "Pondelok\nUtorok\nStreda\nStvrtok\nPiatok\nSobota\nNedela"
+        doctorAddressText.text = "${doctor.address}, ${doctor.city}"
+        doctorContactText.text = doctor.phone
+        doctorDescriptionText.text = doctor.description
         isFavourite = doctor.is_favourite
         if (isFavourite) {
             doctorStar.setImageResource(R.drawable.star_filled)

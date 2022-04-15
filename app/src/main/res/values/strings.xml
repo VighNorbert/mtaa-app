@@ -62,6 +62,10 @@
 
     <string name="detail.make_appointment">Objednať sa na vyšetrenie</string>
     <string name="detail.next">Ďalej</string>
+    <string name="detail.schedule"><b>Ordinačné hodiny:</b></string>
+    <string name="detail.address"><b>Adresa:</b></string>
+    <string name="detail.contact"><b>Kontakt:</b></string>
+    <string name="detail.description"><b>Popis:</b></string>
 
     <string name="appointments.heading">Vyšetrenia</string>
 

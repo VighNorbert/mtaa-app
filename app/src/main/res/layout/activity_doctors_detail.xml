@@ -67,16 +67,146 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/nadpis"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/doctorNameText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/poppins"
+                        android:textSize="26sp"
                         android:textColor="@color/primaryTextColor"
-                        android:textSize="30sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorAvatarLayout" />
+
+                    <TextView
+                        android:id="@+id/doctorSpecialisationText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="20sp"
+                        android:textColor="@color/primaryTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorNameText" />
+
+                    <TextView
+                        android:id="@+id/doctorScheduleHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="32dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="20sp"
+                        android:textColor="@color/primaryTextColor"
+                        android:text="@string/detail.schedule"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorSpecialisationText" />
+
+                    <TextView
+                        android:id="@+id/doctorScheduleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/primaryTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
+
+
+                    <Button
+                        android:gravity="center"
+                        android:id="@+id/doctorsMakeAppointmentButtonTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="32dp"
+                        android:backgroundTint="@color/primaryColor"
+                        android:text="@string/detail.make_appointment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:onClick="onMakeAppointmentClick"
+                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleText"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/doctorAddressHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="20sp"
+                        android:textColor="@color/primaryTextColor"
+                        android:text="@string/detail.address"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorsMakeAppointmentButtonTop" />
+
+                    <TextView
+                        android:id="@+id/doctorAddressText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/primaryTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorAddressHeading" />
+
+                    <TextView
+                        android:id="@+id/doctorContactHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="20sp"
+                        android:textColor="@color/primaryTextColor"
+                        android:text="@string/detail.contact"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorAddressText" />
+
+                    <TextView
+                        android:id="@+id/doctorContactText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/primaryTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorContactHeading" />
+
+                    <TextView
+                        android:id="@+id/doctorDescriptionHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="20sp"
+                        android:textColor="@color/primaryTextColor"
+                        android:text="@string/detail.description"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorContactText" />
+
+                    <TextView
+                        android:id="@+id/doctorDescriptionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:paddingBottom="80dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/primaryTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorDescriptionHeading" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
