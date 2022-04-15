@@ -18,14 +18,23 @@ import sk.evysetrenie.api.model.contracts.requests.RegisterRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.RegisterResponse
 import java.lang.Exception
+import java.security.MessageDigest
 
 class AuthService {
 
+    private fun hash(password: String, algorithm: String = "SHA_256"): String {
+        return MessageDigest
+            .getInstance("SHA-256")
+            .digest(password.toByteArray())
+            .fold("") { str, it -> str + "%02x".format(it) }
+    }
+
     fun authenticate(loginRequest: LoginRequest, activity: LoginActivity) {
+        loginRequest.password = hash(loginRequest.password)
         val body = Json.encodeToString(loginRequest)
 
         val request = Request.Builder()
-            .url("https://api.norb.sk/login")
+            .url(Constants.API_URL + "login")
             .method("POST", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
             .addHeader("accept", "application/json")
             .build()
@@ -56,10 +65,11 @@ class AuthService {
     }
 
     fun register(registerRequest: RegisterRequest, activity: RegisterPatientActivity) {
+        registerRequest.password = hash(registerRequest.password)
         val body = Json.encodeToString(registerRequest)
 
         val request = Request.Builder()
-            .url("https://api.norb.sk/register")
+            .url(Constants.API_URL + "register")
             .method("POST", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
             .addHeader("accept", "application/json")
             .build()
@@ -89,13 +99,14 @@ class AuthService {
     }
 
     fun registerDoctor(registerDoctorRequest: RegisterDoctorRequest, activity: RegisterDoctorActivity) {
+        registerDoctorRequest.password = hash(registerDoctorRequest.password!!)
         val body = Json.encodeToString(registerDoctorRequest)
 
         println(body.replace(",\"",",\n\""))
         println(body.length)
 
         val request = Request.Builder()
-            .url("https://api.norb.sk/register-doctor")
+            .url(Constants.API_URL + "register-doctor")
             .method("POST", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
             .addHeader("accept", "application/json")
             .build()
@@ -125,13 +136,14 @@ class AuthService {
     }
 
     fun editProfile(registerDoctorRequest: RegisterDoctorRequest, activity: MyProfileActivity) {
+        registerDoctorRequest.password = hash(registerDoctorRequest.password!!)
         val body = Json.encodeToString(registerDoctorRequest)
 
         println(body.replace(",\"",",\n\""))
         println(body.length)
 
         val request = Request.Builder()
-            .url("https://api.norb.sk/profile")
+            .url(Constants.API_URL + "profile")
             .method("PUT", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
             .addHeader("accept", "application/json")
             .addHeader("x-auth-token", AuthState.getAccessToken())

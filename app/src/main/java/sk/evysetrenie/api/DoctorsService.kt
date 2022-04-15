@@ -19,7 +19,7 @@ import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
 class DoctorsService {
 
     fun getCollection(doctorsRequest: DoctorsRequest, activity: DoctorsActivity) {
-        val weburl = "https://api.norb.sk/doctors"
+        val weburl = Constants.API_URL + "doctors"
         val urlBuilder = weburl.toHttpUrl().newBuilder()
         if (doctorsRequest.name != null) { urlBuilder.addQueryParameter("name", doctorsRequest.name) }
         if (doctorsRequest.specialisation != null) { urlBuilder.addQueryParameter("specialisation", doctorsRequest.specialisation.toString()) }
@@ -60,7 +60,7 @@ class DoctorsService {
 
     fun getDetail(doctor_id: Int, activity: DoctorsDetailReader) {
         val request = Request.Builder()
-            .url("https://api.norb.sk/doctor/$doctor_id")
+            .url(Constants.API_URL + "doctor/$doctor_id")
             .addHeader("accept", "application/json")
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .build()
@@ -91,7 +91,7 @@ class DoctorsService {
 
     fun getAvatar(doctor_id: Int, activity: DoctorsDetailActivity) {
         val request = Request.Builder()
-            .url("https://api.norb.sk/doctor/$doctor_id/avatar")
+            .url(Constants.API_URL + "doctor/$doctor_id/avatar")
             .addHeader("accept", "image/*")
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .build()
@@ -128,7 +128,7 @@ class DoctorsService {
 
     fun addToFavourites(doctor_id: Int, setter: FavouriteSetter? = null, activity: BaseActivity? = null) {
         val body = "{}".toRequestBody()
-        val weburl = "https://api.norb.sk/doctor/$doctor_id/favourite"
+        val weburl = Constants.API_URL + "doctor/$doctor_id/favourite"
         val request = Request.Builder()
             .url(weburl)
             .method("POST", body)
@@ -140,7 +140,7 @@ class DoctorsService {
     }
 
     fun removeFromFavourites(doctor_id: Int, setter: FavouriteSetter? = null, activity: BaseActivity? = null) {
-        val weburl = "https://api.norb.sk/doctor/$doctor_id/favourite"
+        val weburl = Constants.API_URL + "doctor/$doctor_id/favourite"
         val request = Request.Builder()
             .url(weburl)
             .method("DELETE", null)

@@ -18,7 +18,7 @@ class SpecialisationService {
     fun getAll(reader: SpecialisationReader? = null, activity: BaseActivity? = null) {
         if (specialisations == null) {
             val request = Request.Builder()
-                .url("https://api.norb.sk/specialisations")
+                .url(Constants.API_URL + "specialisations")
                 .method("GET", null)
                 .addHeader("accept", "application/json")
                 .build()

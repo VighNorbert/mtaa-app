@@ -11,7 +11,7 @@ data class RegisterDoctorRequest(
     val title: String,
     val email: String,
     val phone: String,
-    val password: String?,
+    var password: String?,
     val specialisation_id: Int,
     val appointments_length: Int,
     val address: String,
