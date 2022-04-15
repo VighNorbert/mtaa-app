@@ -30,6 +30,7 @@
     <string name="field.time_to">Do</string>
 
     <string name="buttons.add">Pridať</string>
+    <string name="buttons.save_changes">Uložiť zmeny</string>
 
 
     <string name="login.heading">Prihlásenie</string>
@@ -66,6 +67,8 @@
     <string name="appointments.heading">Vyšetrenia</string>
 
     <string name="my_profile.heading">Môj profil</string>
+    <string name="my_profile.success">Váš profil bol úspešne zmenený.</string>
+    <string name="my_profile.edited_appointments">Upravené ordinačné hodiny sa prejavia za 31 dní, kvôli prípadným existujúcim vyšetreniam.</string>
 
     <string name="pref_speakerphone_key">speakerphone_preference</string>
     <string name="pref_speakerphone_default">auto</string>

@@ -17,6 +17,6 @@ data class RegisterDoctorRequest(
     val address: String,
     val city: String,
     val description: String,
-    val schedules: List<WorkSchedule>,
+    val schedules: List<WorkSchedule>?,
     val avatar: Avatar? = null
 )

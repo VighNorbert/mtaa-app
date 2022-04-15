@@ -10,17 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import sk.evysetrenie.api.AuthState
-import sk.evysetrenie.api.SpecialisationService
-import sk.evysetrenie.api.Validator
+import sk.evysetrenie.api.*
 import sk.evysetrenie.api.model.Avatar
 import sk.evysetrenie.api.model.Doctor
 import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
+import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 
-class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor {
+class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, DoctorsDetailReader {
 
     private lateinit var nameTextInput: TextInputEditText
     private lateinit var nameTextLayout: TextInputLayout
@@ -131,7 +130,6 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor {
             appointmentsLengthTextInput.addTextChangedListener(TextFieldValidation(appointmentsLengthTextInput))
             appointmentsLengthTextInput.setText(me.appointments_length.toString())
 
-//            workSchedulesList = me.schedules
             workSchedulesAdapter = WorkSchedulesAdapter(workSchedulesList, this)
             workSchedulesRecyclerView = findViewById(R.id.workSchedulesRecyclerView)
             workSchedulesRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -145,6 +143,8 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor {
             specialisationService.getAll(this, this)
 
             imageManager = ImageManager(this, avatarImageView, noAvatarTextView)
+
+            DoctorsService().getDetail(me.id!!, this)
         }
     }
 
@@ -177,10 +177,10 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor {
                 addressTextInput.text.toString(),
                 cityTextInput.text.toString(),
                 descriptionTextInput.text.toString(),
-                workSchedulesList,
+                if (workSchedulesAdapter.changed) workSchedulesList else null,
                 avatar
             )
-//            AuthService().registerDoctor(rr, this)
+            AuthService().editProfile(rr, this)
         }
     }
 
@@ -247,10 +247,29 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor {
         errorAlert.text = error.message
     }
 
-    fun successfulRegistration() {
+    override fun dataReceived(doctor: DoctorsDetailResponse) {
+        doctor.schedules.forEach { ws ->
+            workSchedulesList.add(ws)
+        }
+        workSchedulesAdapter.notifyItemRangeInserted(workSchedulesList.size - doctor.schedules.size, doctor.schedules.size)
+    }
+
+    fun successfullyChanged() {
         loadingDialog.dismiss()
-        val intent = Intent(this, LoginActivity::class.java)
-        Toast.makeText(applicationContext, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+
+        me.name = nameTextInput.text.toString()
+        me.surname = surnameTextInput.text.toString()
+        me.title = titleTextInput.text.toString()
+        me.email = emailTextInput.text.toString()
+        me.phone = phoneTextInput.text.toString()
+        me.specialisation = specialisationService.getByTitle(specialisationTextInput.text.toString())!!
+        me.appointments_length = appointmentsLengthTextInput.text.toString().toInt()
+        me.address = addressTextInput.text.toString()
+        me.city = cityTextInput.text.toString()
+        me.description = descriptionTextInput.text.toString()
+
+        val intent = Intent(this, MyProfileActivity::class.java)
+        Toast.makeText(applicationContext, getString(R.string.my_profile_success), Toast.LENGTH_LONG).show()
         startActivity(intent)
         finish()
     }

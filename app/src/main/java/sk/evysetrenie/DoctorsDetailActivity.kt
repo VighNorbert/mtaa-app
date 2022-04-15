@@ -14,7 +14,7 @@ import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 
-class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
+class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter, DoctorsDetailReader {
 
     private var isFavourite: Boolean = false
 
@@ -63,7 +63,7 @@ class DoctorsDetailActivity() : MenuActivity(), FavouriteSetter {
 
     override fun onBackPressed() { }
 
-    fun dataReceived(doctor: DoctorsDetailResponse) {
+    override fun dataReceived(doctor: DoctorsDetailResponse) {
         heading.text = doctor.title + " " + doctor.name + " " + doctor.surname
         isFavourite = doctor.is_favourite
         if (isFavourite) {

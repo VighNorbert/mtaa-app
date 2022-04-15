@@ -58,7 +58,7 @@ class DoctorsService {
         })
     }
 
-    fun getDetail(doctor_id: Int, activity: DoctorsDetailActivity) {
+    fun getDetail(doctor_id: Int, activity: DoctorsDetailReader) {
         val request = Request.Builder()
             .url("https://api.norb.sk/doctor/$doctor_id")
             .addHeader("accept", "application/json")

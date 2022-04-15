@@ -14,6 +14,8 @@ class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedul
 
     private val days : Array<String> = arrayOf("Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota", "Nedeľa")
 
+    var changed : Boolean = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkSchedulesHolder {
         return WorkSchedulesHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_view_work_schedules, parent, false)
@@ -28,6 +30,7 @@ class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedul
         (holder.dayTextView as? AutoCompleteTextView)?.setText(days[workSchedule.weekday], false)
         (holder.dayTextView as? AutoCompleteTextView)?.setOnItemClickListener { _, _, i, _ ->
             holder.dayTextView.setText(days[i], false)
+            changed = true
             workSchedule.weekday = i
         }
 
@@ -48,6 +51,7 @@ class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedul
         holder.removeButton.setOnClickListener{
             val pos = holder.adapterPosition
             workScheduleList.removeAt(pos)
+            changed = true
             notifyItemRemoved(pos)
         }
     }
@@ -72,6 +76,7 @@ class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedul
                 holder.timeToTextView.text = time
                 workSchedule.time_to = "$time:00"
             }
+            changed = true
         }, hour, minute, true)
         timePickerDialog.show()
     }
@@ -79,6 +84,7 @@ class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedul
     fun addItem(ws: WorkSchedule) {
         workScheduleList.add(ws)
         notifyItemInserted(itemCount - 1)
+        changed = true
         println(workScheduleList)
     }
 
