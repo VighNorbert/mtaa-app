@@ -34,6 +34,9 @@
             android:name=".DoctorsActivity"
             android:exported="true" />
         <activity
+            android:name=".DoctorsDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
