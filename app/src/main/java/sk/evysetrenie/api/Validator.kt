@@ -43,8 +43,9 @@ class Validator {
     }
 
     fun validatePassword(input: TextInputEditText, layout: TextInputLayout, inputName: String): Boolean {
-        if (!validateRequired(input, layout, inputName)) {
-            return false
+        if (input.text.toString().isEmpty()) {
+            layout.isErrorEnabled = false
+            return true
         } else if (input.text.toString().length < 8) {
             layout.error = "Pole '$inputName' musí mať dĺžku aspoň 8 znakov!"
             input.requestFocus()

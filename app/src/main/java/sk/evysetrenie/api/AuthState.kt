@@ -34,6 +34,10 @@ object AuthState {
         return null
     }
 
+    fun getLoggedInDoctor() : Doctor {
+        return loggedInDoctor!!
+    }
+
     fun isDoctor(): Boolean? {
         return isDoctor
     }

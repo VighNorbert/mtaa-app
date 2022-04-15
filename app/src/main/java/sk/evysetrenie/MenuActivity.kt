@@ -3,6 +3,7 @@ package sk.evysetrenie
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +20,10 @@ open class MenuActivity : BaseActivity() {
         if (AuthState.isLoggedIn()) {
             val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
             val navView: NavigationView = findViewById(R.id.navView)
+
+            if (!AuthState.isDoctor()!!) {
+                navView.menu.findItem(R.id.nav_profile).isVisible = false
+            }
 
             toggle = ActionBarDrawerToggle(
                 this,
