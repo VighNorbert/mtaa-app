@@ -1,8 +1,9 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import sk.evysetrenie.R
 
 class RegisterActivity : ReturningActivity() {
 

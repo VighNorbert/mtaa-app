@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import sk.evysetrenie.R
 import sk.evysetrenie.api.AuthService
 import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.model.contracts.requests.LoginRequest

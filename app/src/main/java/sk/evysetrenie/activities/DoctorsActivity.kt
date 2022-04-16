@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,10 @@ import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import sk.evysetrenie.adapters.DoctorsAdapter
+import sk.evysetrenie.api.interfaces.FavouriteSetter
+import sk.evysetrenie.R
+import sk.evysetrenie.api.interfaces.SpecialisationReader
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.SpecialisationService

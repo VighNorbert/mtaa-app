@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import sk.evysetrenie.R
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.webrtc.Constants
 

@@ -1,7 +1,6 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,6 +10,10 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.*
 import androidx.core.view.isVisible
+import sk.evysetrenie.api.interfaces.AvatarReader
+import sk.evysetrenie.api.interfaces.DoctorsDetailReader
+import sk.evysetrenie.api.interfaces.FavouriteSetter
+import sk.evysetrenie.R
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.WorkSchedule
@@ -18,7 +21,8 @@ import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 import java.util.*
 
-class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader, AvatarReader {
+class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader,
+    AvatarReader {
 
     private var doctorId: Int? = 0
     private var isFavourite: Boolean = false

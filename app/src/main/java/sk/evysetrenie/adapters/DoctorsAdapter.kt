@@ -1,7 +1,6 @@
-package sk.evysetrenie
+package sk.evysetrenie.adapters
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
@@ -12,8 +11,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import sk.evysetrenie.R
+import sk.evysetrenie.activities.DoctorsActivity
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
 

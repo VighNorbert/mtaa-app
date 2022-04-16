@@ -8,7 +8,12 @@ import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
-import sk.evysetrenie.*
+import sk.evysetrenie.activities.BaseActivity
+import sk.evysetrenie.activities.DoctorsActivity
+import sk.evysetrenie.activities.DoctorsDetailActivity
+import sk.evysetrenie.api.interfaces.AvatarReader
+import sk.evysetrenie.api.interfaces.DoctorsDetailReader
+import sk.evysetrenie.api.interfaces.FavouriteSetter
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.*
 

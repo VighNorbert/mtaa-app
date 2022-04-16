@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.Manifest
 import android.content.Intent
@@ -16,6 +16,7 @@ import androidx.core.view.isGone
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import org.webrtc.*
+import sk.evysetrenie.R
 import sk.evysetrenie.webrtc.*
 
 @ExperimentalCoroutinesApi

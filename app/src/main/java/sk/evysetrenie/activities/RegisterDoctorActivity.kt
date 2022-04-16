@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import sk.evysetrenie.*
+import sk.evysetrenie.adapters.WorkSchedulesAdapter
 import sk.evysetrenie.api.AuthService
+import sk.evysetrenie.api.ImageManager
 import sk.evysetrenie.api.SpecialisationService
 import sk.evysetrenie.api.Validator
+import sk.evysetrenie.api.interfaces.ProfileEditor
+import sk.evysetrenie.api.interfaces.SpecialisationReader
 import sk.evysetrenie.api.model.Avatar
 import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.WorkSchedule
@@ -179,12 +184,20 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
             && validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
             && validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
             && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
-            && validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(R.string.field_specialisation))
+            && validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(
+            R.string.field_specialisation
+        ))
             && validator.validateRequired(addressTextInput, addressTextLayout, getString(R.string.field_address))
             && validator.validateRequired(cityTextInput, cityTextLayout, getString(R.string.field_city))
-            && validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
-            && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
-            && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length), 5)
+            && validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+            R.string.field_appointments_length
+        ))
+            && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+            R.string.field_appointments_length
+        ))
+            && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+            R.string.field_appointments_length
+        ), 5)
             && validator.validateArrayRequired(workSchedulesList, workSchedulesRequiredErrorTextView)
     }
 
@@ -217,7 +230,9 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
                     validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
                 }
                 R.id.specialisationTextView -> {
-                    validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(R.string.field_specialisation))
+                    validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(
+                        R.string.field_specialisation
+                    ))
                 }
                 R.id.addressTextInput -> {
                     validator.validateRequired(addressTextInput, addressTextLayout, getString(R.string.field_address))
@@ -226,9 +241,15 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
                     validator.validateRequired(cityTextInput, cityTextLayout, getString(R.string.field_city))
                 }
                 R.id.appointmentsLengthTextInput -> {
-                    validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
-                        && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
-                        && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length), 5)
+                    validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+                        R.string.field_appointments_length
+                    ))
+                        && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+                        R.string.field_appointments_length
+                    ))
+                        && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(
+                        R.string.field_appointments_length
+                    ), 5)
                 }
             }
         }

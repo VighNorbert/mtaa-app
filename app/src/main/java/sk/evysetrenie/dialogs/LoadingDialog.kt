@@ -1,6 +1,8 @@
-package sk.evysetrenie
+package sk.evysetrenie.dialogs
 
 import android.app.AlertDialog
+import sk.evysetrenie.R
+import sk.evysetrenie.activities.BaseActivity
 
 class LoadingDialog(_activity: BaseActivity) {
     private var activity: BaseActivity = _activity

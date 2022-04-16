@@ -1,9 +1,10 @@
-package sk.evysetrenie
+package sk.evysetrenie.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import sk.evysetrenie.dialogs.LoadingDialog
 import sk.evysetrenie.api.AuthState
 
 open class BaseActivity : AppCompatActivity() {

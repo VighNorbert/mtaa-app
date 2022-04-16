@@ -7,10 +7,10 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
-import sk.evysetrenie.LoginActivity
-import sk.evysetrenie.MyProfileActivity
-import sk.evysetrenie.RegisterDoctorActivity
-import sk.evysetrenie.RegisterPatientActivity
+import sk.evysetrenie.activities.LoginActivity
+import sk.evysetrenie.activities.MyProfileActivity
+import sk.evysetrenie.activities.RegisterDoctorActivity
+import sk.evysetrenie.activities.RegisterPatientActivity
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
 import sk.evysetrenie.api.model.contracts.requests.LoginRequest
 import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
