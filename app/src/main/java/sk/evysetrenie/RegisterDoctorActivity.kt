@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import sk.evysetrenie.api.AuthService
+import sk.evysetrenie.api.ImageManager
 import sk.evysetrenie.api.SpecialisationService
 import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.model.Avatar

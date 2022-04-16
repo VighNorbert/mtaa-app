@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.api
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.scale
+import sk.evysetrenie.ProfileEditor
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 import kotlin.math.min
