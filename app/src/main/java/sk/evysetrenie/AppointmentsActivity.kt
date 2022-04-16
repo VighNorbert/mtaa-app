@@ -59,7 +59,26 @@ class AppointmentsActivity : MenuActivity() {
     }
 
     fun showError(error: ApiError) {
+        loadingDialog.dismiss()
         appointmentsProgressBar.visibility = View.GONE
         Toast.makeText(this.applicationContext, error.message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun removeAppointment(appointmentResponse: AppointmentResponse) {
+        loadingDialog.open()
+
+        AppointmentsService().remove(appointmentResponse.doctor.id!!, appointmentResponse.id, this)
+    }
+
+    fun successfulRemoval() {
+        loadingDialog.dismiss()
+        appointmentsAdapter.removeSuccess()
+
+        if (appointmentsList.isEmpty()) {
+            appointmentsNoResultTextView.visibility = View.VISIBLE
+        } else {
+            appointmentsNoResultTextView.visibility = View.GONE
+        }
+        Toast.makeText(applicationContext, "Termín vyšetrenia bol zrušený", Toast.LENGTH_SHORT).show()
     }
 }

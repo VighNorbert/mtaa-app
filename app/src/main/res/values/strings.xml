@@ -6,6 +6,8 @@
     <string name="general.back_button">Tlačidlo späť</string>
     <string name="general.open">Otvoriť</string>
     <string name="general.close">Zatvoriť</string>
+    <string name="general.yes">Áno</string>
+    <string name="general.no">Nie</string>
 
     <string name="menu.doctors">Zoznam lekárov</string>
     <string name="menu.appointments">Moje vyšetrenia</string>
@@ -32,6 +34,8 @@
 
     <string name="buttons.add">Pridať</string>
     <string name="buttons.save_changes">Uložiť zmeny</string>
+    <string name="buttons.call">Zavolať</string>
+    <string name="buttons.remove">Zrušiť</string>
 
 
     <string name="login.heading">Prihlásenie</string>
@@ -86,5 +90,8 @@
     <string name="webrtc.end_call">Ukončiť hovor</string>
     <string name="webrtc.switch_camera">Zmeniť kameru</string>
     <string name="webrtc.audio_output">Výstup zvuku</string>
+
+    <string name="dialog.confirm.heading">Potvrdenie</string>
+    <string name="dialog.confirm.remove_appointment">Ste si istý, že chcete zrušiť toto vyšetrenie?</string>
 
 </resources>
