@@ -14,7 +14,7 @@ class AppointmentsService {
 
     fun getCollection(date: Date?, activity: AppointmentsActivity) {
         val request = Request.Builder()
-            .url(Constants.API_URL + "doctors")
+            .url(Constants.API_URL + "appointments")
             .addHeader("accept", "application/json")
             .addHeader("x-auth-token", AuthState.getAccessToken())
             .build()

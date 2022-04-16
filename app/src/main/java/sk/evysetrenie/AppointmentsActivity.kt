@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.adapters.AppointmentsAdapter
+import sk.evysetrenie.api.AppointmentsService
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
@@ -20,6 +21,8 @@ class AppointmentsActivity : MenuActivity() {
     private lateinit var appointmentsRecyclerView: RecyclerView
     private lateinit var appointmentsProgressBar: ProgressBar
 
+    private var appointmentsList: MutableList<AppointmentResponse> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         checkLoggedIn()
         if (AuthState.isLoggedIn()) {
@@ -27,17 +30,32 @@ class AppointmentsActivity : MenuActivity() {
             appointmentsLayoutManager = LinearLayoutManager(this)
             appointmentsNoResultTextView = findViewById(R.id.appointmentsNoResultsTextView)
             appointmentsRecyclerView = findViewById(R.id.appointmentsRecyclerView)
+            appointmentsRecyclerView.layoutManager = appointmentsLayoutManager
             appointmentsProgressBar = findViewById(R.id.appointmentsProgressBar)
         }
         super.onCreate(savedInstanceState)
-
-        // TODO adapter
+        if (AuthState.isLoggedIn()) {
+            AppointmentsService().getCollection(null, this)
+        }
     }
 
     override fun onBackPressed() { }
 
     fun dataReceived(appointments: List<AppointmentResponse>) {
-
+        appointmentsList.addAll(appointments)
+        if (appointmentsList.isEmpty()) {
+            appointmentsNoResultTextView.visibility = View.VISIBLE
+        } else {
+            appointmentsNoResultTextView.visibility = View.GONE
+        }
+        if (this::appointmentsAdapter.isInitialized) {
+            appointmentsAdapter.notifyItemRangeInserted(appointmentsList.size - appointments.size, appointmentsList.size)
+        }
+        else {
+            appointmentsAdapter = AppointmentsAdapter(appointmentsList, this)
+            appointmentsRecyclerView.adapter = appointmentsAdapter
+        }
+        appointmentsProgressBar.visibility = View.GONE
     }
 
     fun showError(error: ApiError) {
