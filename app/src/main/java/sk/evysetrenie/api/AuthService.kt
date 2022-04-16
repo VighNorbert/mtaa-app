@@ -136,7 +136,8 @@ class AuthService {
     }
 
     fun editProfile(registerDoctorRequest: RegisterDoctorRequest, activity: MyProfileActivity) {
-        registerDoctorRequest.password = hash(registerDoctorRequest.password!!)
+        if (registerDoctorRequest.password !== null)
+            registerDoctorRequest.password = hash(registerDoctorRequest.password!!)
         val body = Json.encodeToString(registerDoctorRequest)
 
         println(body.replace(",\"",",\n\""))
