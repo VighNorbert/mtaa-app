@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.*
 import okio.IOException
 import sk.evysetrenie.BaseActivity
-import sk.evysetrenie.SpecialisationReader
+import sk.evysetrenie.api.interfaces.SpecialisationReader
 import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
 import sk.evysetrenie.api.model.contracts.responses.ApiError

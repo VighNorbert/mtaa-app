@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.api.interfaces
 
 import sk.evysetrenie.api.model.Specialisation
 import sk.evysetrenie.api.model.contracts.responses.ApiError

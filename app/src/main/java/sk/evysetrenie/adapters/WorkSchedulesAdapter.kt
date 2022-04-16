@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.adapters
 
 import android.app.TimePickerDialog
 import android.text.InputType
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import sk.evysetrenie.R
+import sk.evysetrenie.BaseActivity
 import sk.evysetrenie.api.model.WorkSchedule
 
 

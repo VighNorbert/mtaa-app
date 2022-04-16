@@ -1,4 +1,4 @@
-package sk.evysetrenie
+package sk.evysetrenie.api.interfaces
 
 import android.graphics.Bitmap
 import sk.evysetrenie.api.model.contracts.responses.ApiError

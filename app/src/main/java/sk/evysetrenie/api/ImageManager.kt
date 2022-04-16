@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.scale
-import sk.evysetrenie.ProfileEditor
+import sk.evysetrenie.api.interfaces.ProfileEditor
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 import kotlin.math.min

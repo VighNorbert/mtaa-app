@@ -73,8 +73,8 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="26sp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="26sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorAvatarLayout" />
 
@@ -85,8 +85,8 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="-4dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="20sp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorNameText" />
 
@@ -97,40 +97,52 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="20sp"
-                        android:textColor="@color/primaryTextColor"
                         android:text="@string/detail.schedule"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorSpecialisationText" />
 
                     <TextView
-                        android:id="@+id/doctorScheduleText"
-                        android:layout_width="match_parent"
+                        android:id="@+id/doctorScheduleDayText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="-4dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="16sp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
+
+                    <TextView
+                        android:id="@+id/doctorScheduleTimeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toRightOf="@id/doctorScheduleDayText"
                         app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
 
 
                     <Button
-                        android:gravity="center"
                         android:id="@+id/doctorsMakeAppointmentButtonTop"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="16dp"
                         android:backgroundTint="@color/primaryColor"
+                        android:gravity="center"
+                        android:onClick="onMakeAppointmentClick"
                         android:text="@string/detail.make_appointment"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:onClick="onMakeAppointmentClick"
-                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleText"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleDayText" />
 
                     <TextView
                         android:id="@+id/doctorAddressHeading"
@@ -139,9 +151,9 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="20sp"
-                        android:textColor="@color/primaryTextColor"
                         android:text="@string/detail.address"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorsMakeAppointmentButtonTop" />
 
@@ -152,8 +164,8 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="-4dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="16sp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorAddressHeading" />
 
@@ -164,9 +176,9 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="20sp"
-                        android:textColor="@color/primaryTextColor"
                         android:text="@string/detail.contact"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorAddressText" />
 
@@ -177,8 +189,8 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="-4dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="16sp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorContactHeading" />
 
@@ -189,9 +201,9 @@
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="20sp"
-                        android:textColor="@color/primaryTextColor"
                         android:text="@string/detail.description"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorContactText" />
 
@@ -201,10 +213,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="-4dp"
-                        android:paddingBottom="80dp"
                         android:fontFamily="@font/poppins"
-                        android:textSize="16sp"
+                        android:paddingBottom="80dp"
                         android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/doctorDescriptionHeading" />
 
@@ -236,6 +248,42 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 
+            <!--            <TextView-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:text="choose date"-->
+            <!--                android:gravity="center"-->
+            <!--                android:onClick="showCalendar"-->
+            <!--                android:background="@color/primaryColor"/>-->
+
+            <TextView
+                android:id="@+id/detailAppointmentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/curve_background"
+                android:fontFamily="@font/poppins"
+                android:onClick="getAvailableDates"
+                android:padding="16dp"
+                android:text="@string/detail.date"
+                android:textSize="18sp"
+                app:hintTextColor="#757575"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!--                <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
+            <!--                    android:id="@+id/detailAppointmentDateText"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:hint="@string/detail.date"-->
+            <!--                    android:inputType="none"-->
+            <!--                    android:onClick="getAvailableDates"-->
+            <!--                    android:textColor="#757575"-->
+            <!--                    tools:ignore="TextContrastCheck" />-->
+
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
             <Button
                 android:id="@+id/detailAppointmentNext"
                 android:layout_width="match_parent"
@@ -244,7 +292,7 @@
                 android:layout_marginVertical="32dp"
                 android:backgroundTint="@color/primaryColor"
                 android:paddingVertical="16dp"
-                android:text="@string/detail.next"
+                android:text="@string/detail.make_appointment_submit"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp"
