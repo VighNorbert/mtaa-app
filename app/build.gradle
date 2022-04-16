@@ -62,4 +62,6 @@ dependencies {
     implementation 'org.webrtc:google-webrtc:1.0.32006'
     implementation platform('com.google.firebase:firebase-bom:27.0.0')
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }
