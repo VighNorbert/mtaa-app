@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.adapters.AppointmentsAdapter
 import sk.evysetrenie.api.AppointmentsService
 import sk.evysetrenie.api.AuthState
+import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
 
@@ -42,7 +43,8 @@ class AppointmentsActivity : MenuActivity() {
     override fun onBackPressed() { }
 
     fun dataReceived(appointments: List<AppointmentResponse>) {
-        appointmentsList.addAll(appointments)
+        val sortedappointments = appointments.sortedWith(compareBy<AppointmentResponse> { it.date }.thenBy { it.time_from })
+        appointmentsList.addAll(sortedappointments)
         if (appointmentsList.isEmpty()) {
             appointmentsNoResultTextView.visibility = View.VISIBLE
         } else {
