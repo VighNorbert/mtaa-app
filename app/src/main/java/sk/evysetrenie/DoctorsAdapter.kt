@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,7 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>, val activity: Docto
         else {
             holder.doctorStar.setImageResource(R.drawable.star_unfilled)
         }
-        holder.doctorNameTextView.setOnClickListener{
+        holder.doctorLinearLayout.setOnClickListener{
             activity.getDoctorDetail(doctor.id)
         }
         holder.doctorStar.setOnClickListener{
@@ -61,6 +62,7 @@ class DoctorsAdapter(val doctorsList: List<DoctorsResponse>, val activity: Docto
     override fun getItemCount() = doctorsList.size
 
     class DoctorsHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val doctorLinearLayout: LinearLayout = view.findViewById(R.id.doctorLinearLayout)
         val doctorNameTextView: TextView = view.findViewById(R.id.doctorNameTextView)
         val doctorSpecialisationTextView: TextView = view.findViewById(R.id.doctorSpecialisationTextView)
         val doctorStar: ImageView = view.findViewById(R.id.doctorStar)

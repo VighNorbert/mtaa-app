@@ -10,10 +10,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import sk.evysetrenie.*
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
-import sk.evysetrenie.api.model.contracts.responses.ApiError
-import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
-import sk.evysetrenie.api.model.contracts.responses.DoctorsResponse
-import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
+import sk.evysetrenie.api.model.contracts.responses.*
 
 
 class DoctorsService {
@@ -176,7 +173,43 @@ class DoctorsService {
                                 Toast.makeText(activity.applicationContext, "Lekár bol odobraný", Toast.LENGTH_SHORT).show()
                             }
                         }
+                    }
+                }
+            }
+        })
+    }
 
+    fun getDates(doctor_id: Int, month: Int, year: Int, activity: DoctorsDetailActivity) {
+        val weburl = Constants.API_URL + "doctor/${doctor_id}/appointment/dates"
+        val urlBuilder = weburl.toHttpUrl().newBuilder()
+        urlBuilder.addQueryParameter("month", month.toString())
+        urlBuilder.addQueryParameter("year", year.toString())
+        val url = urlBuilder.build()
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("accept", "application/json")
+            .addHeader("x-auth-token", AuthState.getAccessToken())
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        try {
+                            val error =
+                                Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                            activity.runOnUiThread { activity.showError(error.error) }
+                        } catch (e: Exception) {
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        }
+                    } else {
+                        val res = Json.decodeFromString<List<Int>>(response.body!!.string())
+                        activity.runOnUiThread { activity.datesReceived(res, month, year) }
                     }
                 }
             }
