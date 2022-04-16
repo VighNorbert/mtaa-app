@@ -56,6 +56,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
     private lateinit var appointmentsLengthTextLayout: TextInputLayout
 
     private lateinit var errorAlert: TextView
+    private lateinit var workSchedulesRequiredErrorTextView: TextView
 
     private lateinit var avatarImageView: ImageView
     private lateinit var noAvatarTextView: TextView
@@ -118,6 +119,7 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
         workSchedulesRecyclerView.adapter = workSchedulesAdapter
 
         errorAlert = findViewById(R.id.errorAlert)
+        workSchedulesRequiredErrorTextView = findViewById(R.id.workSchedulesRequiredErrorTextView)
 
         avatarImageView = findViewById(R.id.avatarImageView)
         noAvatarTextView = findViewById(R.id.noAvatarTextView)
@@ -128,7 +130,8 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
     }
 
     fun addNewWorkSchedule(x : View) {
-        workSchedulesAdapter.addItem(WorkSchedule(0, "08:00:00", "16:00:00"))
+        workSchedulesAdapter.addItem(WorkSchedule(1, "08:00:00", "16:00:00"))
+        workSchedulesRequiredErrorTextView.visibility = View.GONE
     }
 
     fun onSubmit(x: View) {
@@ -159,6 +162,8 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
                 avatar
             )
             AuthService().registerDoctor(rr, this)
+        } else {
+            loadingDialog.dismiss()
         }
     }
 
@@ -169,10 +174,18 @@ class RegisterDoctorActivity : ReturningActivity(), SpecialisationReader, Profil
     private fun isValidForm(): Boolean {
         return validator.validateRequired(nameTextInput, nameTextLayout, getString(R.string.field_name))
             && validator.validateRequired(surnameTextInput, surnameTextLayout, getString(R.string.field_surname))
+            && validator.validateMaxLength(titleTextInput, titleTextLayout, getString(R.string.field_title), 8)
             && validator.validateEmail(emailTextInput, emailTextLayout, getString(R.string.field_email))
             && validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
             && validator.validateRequired(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
             && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
+            && validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(R.string.field_specialisation))
+            && validator.validateRequired(addressTextInput, addressTextLayout, getString(R.string.field_address))
+            && validator.validateRequired(cityTextInput, cityTextLayout, getString(R.string.field_city))
+            && validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
+            && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
+            && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length), 5)
+            && validator.validateArrayRequired(workSchedulesList, workSchedulesRequiredErrorTextView)
     }
 
     private fun hideError() {

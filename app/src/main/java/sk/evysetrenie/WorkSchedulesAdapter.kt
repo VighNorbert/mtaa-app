@@ -12,7 +12,7 @@ import sk.evysetrenie.api.model.WorkSchedule
 
 class WorkSchedulesAdapter(private val workScheduleList: MutableList<WorkSchedule>, private val activity: BaseActivity) : RecyclerView.Adapter<WorkSchedulesAdapter.WorkSchedulesHolder>() {
 
-    private val days : Array<String> = arrayOf("Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota", "Nedeľa")
+    private val days : Array<String> = arrayOf("Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota")
 
     var changed : Boolean = false
 

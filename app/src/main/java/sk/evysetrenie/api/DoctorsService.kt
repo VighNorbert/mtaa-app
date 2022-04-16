@@ -89,7 +89,7 @@ class DoctorsService {
         })
     }
 
-    fun getAvatar(doctor_id: Int, activity: DoctorsDetailActivity) {
+    fun getAvatar(doctor_id: Int, activity: AvatarReader) {
         val request = Request.Builder()
             .url(Constants.API_URL + "doctor/$doctor_id/avatar")
             .addHeader("accept", "image/*")

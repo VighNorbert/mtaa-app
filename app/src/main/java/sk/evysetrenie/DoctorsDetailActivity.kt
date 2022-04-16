@@ -13,13 +13,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import okhttp3.ResponseBody
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 
-class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader {
+class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader, AvatarReader {
 
     private var isFavourite: Boolean = false
 
@@ -100,7 +99,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         loadingDialog.dismiss()
     }
 
-    fun avatarReceived(bmp: Bitmap?) {
+    override fun avatarReceived(bmp: Bitmap?) {
         if (bmp == null) {
             doctorAvatarImageView.setImageResource(R.drawable.default_doctor_avatar)
         }

@@ -25,4 +25,10 @@
         android:fontFamily="@font/poppins_medium"
         android:icon="@drawable/ic_baseline_call_24" />
 
+    <item
+        android:id="@+id/nav_logout"
+        android:title="@string/menu.logout"
+        android:fontFamily="@font/poppins_medium"
+        android:icon="@drawable/ic_baseline_logout_24" />
+
 </menu>

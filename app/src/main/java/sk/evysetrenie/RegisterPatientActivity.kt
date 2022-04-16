@@ -71,6 +71,8 @@ class RegisterPatientActivity : ReturningActivity() {
                 passwordTextInput.text.toString(),
             )
             AuthService().register(rr, this)
+        } else {
+            loadingDialog.dismiss()
         }
     }
 

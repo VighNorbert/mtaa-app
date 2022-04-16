@@ -1,5 +1,6 @@
 package sk.evysetrenie.api
 
+import android.view.View
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -112,6 +113,16 @@ class Validator {
             return false
         }
         layout.isErrorEnabled = false
+        return true
+    }
+
+    fun <T> validateArrayRequired(list: List<T>, textView: TextView): Boolean {
+        if (list.isEmpty()) {
+            textView.visibility = View.VISIBLE
+            textView.requestFocus()
+            return false
+        }
+        textView.visibility = View.GONE
         return true
     }
 

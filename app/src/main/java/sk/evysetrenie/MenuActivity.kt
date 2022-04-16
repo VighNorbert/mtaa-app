@@ -52,6 +52,12 @@ open class MenuActivity : BaseActivity() {
                         startActivity(
                             Intent(applicationContext, MainActivity::class.java)
                         )
+                    R.id.nav_logout -> {
+                        AuthState.logout()
+                        startActivity(
+                            Intent(applicationContext, LoginActivity::class.java)
+                        )
+                    }
                 }
                 true
             }

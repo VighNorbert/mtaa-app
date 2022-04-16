@@ -1,6 +1,7 @@
 package sk.evysetrenie
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,7 +20,7 @@ import sk.evysetrenie.api.model.contracts.requests.RegisterDoctorRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 
-class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, DoctorsDetailReader {
+class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, DoctorsDetailReader, AvatarReader {
 
     private lateinit var nameTextInput: TextInputEditText
     private lateinit var nameTextLayout: TextInputLayout
@@ -55,6 +56,7 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
     private lateinit var appointmentsLengthTextLayout: TextInputLayout
 
     private lateinit var errorAlert: TextView
+    private lateinit var workSchedulesRequiredErrorTextView: TextView
 
     private lateinit var avatarImageView: ImageView
     private lateinit var noAvatarTextView: TextView
@@ -136,6 +138,7 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
             workSchedulesRecyclerView.adapter = workSchedulesAdapter
 
             errorAlert = findViewById(R.id.errorAlert)
+            workSchedulesRequiredErrorTextView = findViewById(R.id.workSchedulesRequiredErrorTextView)
 
             avatarImageView = findViewById(R.id.avatarImageView)
             noAvatarTextView = findViewById(R.id.noAvatarTextView)
@@ -145,11 +148,13 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
             imageManager = ImageManager(this, avatarImageView, noAvatarTextView)
 
             DoctorsService().getDetail(me.id!!, this)
+            DoctorsService().getAvatar(me.id!!, this)
         }
     }
 
     fun addNewWorkSchedule(x : View) {
-        workSchedulesAdapter.addItem(WorkSchedule(0, "08:00:00", "16:00:00"))
+        workSchedulesAdapter.addItem(WorkSchedule(1, "08:00:00", "16:00:00"))
+        workSchedulesRequiredErrorTextView.visibility = View.GONE
     }
 
     fun onSubmit(x: View) {
@@ -181,6 +186,8 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
                 avatar
             )
             AuthService().editProfile(rr, this)
+        } else {
+            loadingDialog.dismiss()
         }
     }
 
@@ -191,9 +198,16 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
     private fun isValidForm(): Boolean {
         return validator.validateRequired(nameTextInput, nameTextLayout, getString(R.string.field_name))
                 && validator.validateRequired(surnameTextInput, surnameTextLayout, getString(R.string.field_surname))
+                && validator.validateMaxLength(titleTextInput, titleTextLayout, getString(R.string.field_title), 8)
                 && validator.validateEmail(emailTextInput, emailTextLayout, getString(R.string.field_email))
                 && validator.validatePhone(phoneTextInput, phoneTextLayout, getString(R.string.field_phone))
-                && validator.validatePassword(passwordTextInput, passwordTextLayout, getString(R.string.field_password))
+                && validator.validateRequired(specialisationTextInput, specialisationTextLayout, getString(R.string.field_specialisation))
+                && validator.validateRequired(addressTextInput, addressTextLayout, getString(R.string.field_address))
+                && validator.validateRequired(cityTextInput, cityTextLayout, getString(R.string.field_city))
+                && validator.validateRequired(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
+                && validator.validateNumber(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length))
+                && validator.validateMin(appointmentsLengthTextInput, appointmentsLengthTextLayout, getString(R.string.field_appointments_length), 5)
+                && validator.validateArrayRequired(workSchedulesList, workSchedulesRequiredErrorTextView)
     }
 
     private fun hideError() {
@@ -245,6 +259,14 @@ class MyProfileActivity : MenuActivity(), SpecialisationReader, ProfileEditor, D
         loadingDialog.dismiss()
         errorAlert.visibility = View.VISIBLE
         errorAlert.text = error.message
+    }
+
+    override fun avatarReceived(bmp: Bitmap?) {
+        if (bmp !== null) {
+            avatarImageView.setImageBitmap(bmp)
+            avatarImageView.visibility = View.VISIBLE
+            noAvatarTextView.visibility = View.GONE
+        }
     }
 
     override fun dataReceived(doctor: DoctorsDetailResponse) {

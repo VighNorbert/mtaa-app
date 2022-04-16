@@ -11,6 +11,7 @@
     <string name="menu.appointments">Moje vyšetrenia</string>
     <string name="menu.my_profile">Môj profil</string>
     <string name="menu.webrtc">WebRTC hovor</string>
+    <string name="menu.logout">Odhlásiť sa</string>
 
     <string name="field.name">Meno</string>
     <string name="field.surname">Priezvisko</string>
@@ -51,6 +52,7 @@
     <string name="register.doctor.logins">Prihlasovacie údaje</string>
     <string name="register.doctor.privates">Osobné údaje</string>
     <string name="register.doctor.ambulance">Údaje o ambulancii</string>
+    <string name="register.doctor.work_schedules.required">Ordinačné hodiny sú povinné.</string>
 
     <string name="doctors.heading">Lekári</string>
     <string name="doctors.favourite">Lekár je obľúbený</string>
