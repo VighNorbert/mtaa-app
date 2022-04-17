@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.AppointmentsActivity
 import sk.evysetrenie.R
@@ -13,6 +14,7 @@ import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
 import sk.evysetrenie.dialogs.ConfirmDialog
 import java.text.SimpleDateFormat
+import java.util.*
 
 class AppointmentsAdapter(private val appointmentsList: MutableList<AppointmentResponse>, val activity: AppointmentsActivity) : RecyclerView.Adapter<AppointmentsAdapter.AppointmentsHolder>() {
 
@@ -37,6 +39,17 @@ class AppointmentsAdapter(private val appointmentsList: MutableList<AppointmentR
         holder.appointmentDescriptionTextView.text = appointment.description
         holder.confirmDialog = ConfirmDialog(activity, this, holder.adapterPosition)
 
+        val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        val currentTime = SimpleDateFormat("HH:mm").format(Date())
+        if (appointment.date < currentDate || (appointment.date == currentDate && appointment.time_to < currentTime)) {
+            holder.appointmentRemoveButton.visibility = View.GONE
+        } else if (appointment.date == currentDate && appointment.time_to > currentTime && appointment.time_from <= currentTime) {
+            if (appointment.type == "O") {
+                holder.appointmentCallButton.visibility = View.VISIBLE
+            }
+            holder.appointmentLayout.setBackgroundResource(R.color.primaryLightColor)
+            holder.appointmentRemoveButton.visibility = View.GONE
+        }
         holder.appointmentRemoveButton.setOnClickListener {
             holder.confirmDialog.open()
         }
@@ -56,7 +69,9 @@ class AppointmentsAdapter(private val appointmentsList: MutableList<AppointmentR
     override fun getItemCount() = appointmentsList.size
 
     class AppointmentsHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var appointmentLayout : ConstraintLayout = view.findViewById(R.id.layout)
         val appointmentRemoveButton: ImageView = view.findViewById(R.id.removeButton)
+        val appointmentCallButton: ImageView = view.findViewById(R.id.callButton)
         val appointmentTimeTextView: TextView = view.findViewById(R.id.appointmentTimeTextView)
         val appointmentNameTextView: TextView = view.findViewById(R.id.appointmentNameTextView)
         val appointmentDescriptionTextView: TextView = view.findViewById(R.id.appointmentDescriptionTextView)

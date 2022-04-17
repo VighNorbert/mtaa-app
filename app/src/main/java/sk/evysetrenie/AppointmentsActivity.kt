@@ -1,5 +1,6 @@
 package sk.evysetrenie
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import sk.evysetrenie.adapters.AppointmentsAdapter
 import sk.evysetrenie.api.AppointmentsService
 import sk.evysetrenie.api.AuthState
-import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AppointmentsActivity : MenuActivity() {
 
@@ -42,8 +45,13 @@ class AppointmentsActivity : MenuActivity() {
 
     override fun onBackPressed() { }
 
+    @SuppressLint("SimpleDateFormat")
     fun dataReceived(appointments: List<AppointmentResponse>) {
-        val sortedappointments = appointments.sortedWith(compareBy<AppointmentResponse> { it.date }.thenBy { it.time_from })
+        val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        val currentTime = SimpleDateFormat("HH:mm").format(Date())
+        val sortedappointments = appointments
+            .filter { it.date > currentDate || (it.date == currentDate && it.time_to > currentTime) }
+            .sortedWith(compareBy<AppointmentResponse> { it.date }.thenBy { it.time_from })
         appointmentsList.addAll(sortedappointments)
         if (appointmentsList.isEmpty()) {
             appointmentsNoResultTextView.visibility = View.VISIBLE

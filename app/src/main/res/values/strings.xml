@@ -75,7 +75,7 @@
     <string name="detail.description"><b>Popis:</b></string>
     <string name="detail.date">Zvoľte dátum vyšetrenia</string>
 
-    <string name="appointments.heading">Vyšetrenia</string>
+    <string name="appointments.heading">Nadchádzajúce vyšetrenia</string>
     <string name="appointments.no_results">Neboli nájdené žiadne výsledky</string>
 
     <string name="my_profile.heading">Môj profil</string>
