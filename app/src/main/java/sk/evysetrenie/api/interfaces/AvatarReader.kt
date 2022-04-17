@@ -10,4 +10,6 @@ interface AvatarReader {
     fun runOnUiThread(action: Runnable?)
 
     fun avatarReceived(bmp: Bitmap?)
+
+    fun logout(isExpired: Boolean)
 }

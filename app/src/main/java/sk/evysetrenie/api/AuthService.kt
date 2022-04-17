@@ -159,11 +159,15 @@ class AuthService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         activity.runOnUiThread { activity.successfullyChanged() }

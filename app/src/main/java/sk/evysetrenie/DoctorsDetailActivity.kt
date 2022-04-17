@@ -1,9 +1,6 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
@@ -24,7 +21,6 @@ import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentTimesResponse
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
 import sk.evysetrenie.dialogs.AppointmentPickerDialog
-import sk.evysetrenie.dialogs.ConfirmDialog
 import java.util.*
 
 

@@ -1,13 +1,10 @@
 package sk.evysetrenie.api
 
-import android.widget.Toast
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.*
 import okio.IOException
 import sk.evysetrenie.AppointmentsActivity
-import sk.evysetrenie.BaseActivity
-import sk.evysetrenie.api.interfaces.FavouriteSetter
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
 import sk.evysetrenie.api.model.contracts.responses.ErrorResponse
@@ -31,11 +28,15 @@ class AppointmentsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         val res = Json.decodeFromString<List<AppointmentResponse>>(response.body!!.string())
@@ -65,11 +66,15 @@ class AppointmentsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         activity.runOnUiThread { activity.successfulRemoval() }

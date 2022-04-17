@@ -10,4 +10,6 @@ interface DoctorsDetailReader {
     fun runOnUiThread(action: Runnable?)
 
     fun dataReceived(doctor: DoctorsDetailResponse)
+
+    fun logout(isExpired: Boolean)
 }

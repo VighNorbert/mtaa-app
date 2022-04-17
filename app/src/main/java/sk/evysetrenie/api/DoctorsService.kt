@@ -45,11 +45,15 @@ class DoctorsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         val res = Json.decodeFromString<List<DoctorsResponse>>(response.body!!.string())
@@ -76,11 +80,15 @@ class DoctorsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout(true)
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         val res = Json.decodeFromString<DoctorsDetailResponse>(response.body!!.string())
@@ -107,13 +115,14 @@ class DoctorsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        if (response.code == 404) {
+                        if (response.code == 401) {
+                            activity.logout(true)
+                        } else if (response.code == 404) {
                             activity.runOnUiThread { activity.avatarReceived(null) }
                         }
                         else {
                             try {
-                                val error =
-                                    Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
                                 activity.runOnUiThread { activity.showError(error.error) }
                             } catch (e: Exception) {
                                 activity.runOnUiThread { activity.showError(ApiError(response.code)) }
@@ -128,7 +137,7 @@ class DoctorsService {
         })
     }
 
-    fun addToFavourites(doctor_id: Int, setter: FavouriteSetter? = null, activity: BaseActivity? = null) {
+    fun addToFavourites(doctor_id: Int, setter: FavouriteSetter, activity: BaseActivity) {
         val body = "{}".toRequestBody()
         val weburl = Constants.API_URL + "doctor/$doctor_id/favourite"
         val request = Request.Builder()
@@ -141,7 +150,7 @@ class DoctorsService {
         sendFavouritesRequest(request, setter, activity, true)
     }
 
-    fun removeFromFavourites(doctor_id: Int, setter: FavouriteSetter? = null, activity: BaseActivity? = null) {
+    fun removeFromFavourites(doctor_id: Int, setter: FavouriteSetter, activity: BaseActivity) {
         val weburl = Constants.API_URL + "doctor/$doctor_id/favourite"
         val request = Request.Builder()
             .url(weburl)
@@ -153,24 +162,28 @@ class DoctorsService {
         sendFavouritesRequest(request, setter, activity, false)
     }
 
-    fun sendFavouritesRequest(request: Request, setter: FavouriteSetter? = null, activity: BaseActivity? = null, add: Boolean) {
+    fun sendFavouritesRequest(request: Request, setter: FavouriteSetter, activity: BaseActivity, add: Boolean) {
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
-                activity?.runOnUiThread { setter?.showError(ApiError(400)) }
+                activity.runOnUiThread { setter.showError(ApiError(400)) }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity?.runOnUiThread { setter?.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity?.runOnUiThread { setter?.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { setter.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { setter.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
-                        activity?.runOnUiThread {
+                        activity.runOnUiThread {
                             if (add) {
                                 Toast.makeText(activity.applicationContext, "Lekár bol pridaný", Toast.LENGTH_SHORT).show()
                             }
@@ -205,12 +218,15 @@ class DoctorsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error =
-                                Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         val res = Json.decodeFromString<List<Int>>(response.body!!.string())
@@ -243,12 +259,15 @@ class DoctorsService {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        try {
-                            val error =
-                                Json.decodeFromString<ErrorResponse>(response.body!!.string())
-                            activity.runOnUiThread { activity.showError(error.error) }
-                        } catch (e: Exception) {
-                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        if (response.code == 401) {
+                            activity.logout()
+                        } else {
+                            try {
+                                val error = Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                                activity.runOnUiThread { activity.showError(error.error) }
+                            } catch (e: Exception) {
+                                activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                            }
                         }
                     } else {
                         val res = Json.decodeFromString<List<AppointmentTimesResponse>>(response.body!!.string())
