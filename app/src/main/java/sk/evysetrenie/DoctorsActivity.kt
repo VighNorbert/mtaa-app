@@ -49,6 +49,7 @@ open class DoctorsActivity : MenuActivity(), SpecialisationReader, FavouriteSett
     private var doctorsList: MutableList<DoctorsResponse> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AuthState.sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE)
         checkLoggedIn()
         if (AuthState.isLoggedIn()) {
             setContentView(R.layout.activity_doctors)

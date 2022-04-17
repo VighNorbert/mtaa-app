@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import sk.evysetrenie.api.AuthService
+import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.model.contracts.requests.LoginRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
@@ -27,6 +28,12 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AuthState.isLoggedIn()) {
+            val intent = Intent(this, DoctorsActivity::class.java)
+            startActivity(intent)
+        }
+
         setContentView(R.layout.activity_login)
 
         emailTextInput = findViewById(R.id.emailTextInput)
