@@ -47,10 +47,6 @@ open class MenuActivity : BaseActivity() {
                         startActivity(
                             Intent(applicationContext, MyProfileActivity::class.java)
                         )
-                    R.id.nav_webrtc ->
-                        startActivity(
-                            Intent(applicationContext, MainActivity::class.java)
-                        )
                     R.id.nav_logout -> {
                         AuthState.logout()
                         startActivity(

@@ -134,7 +134,7 @@ class RTCActivity : BaseActivity() {
             remoteView.isGone = false
             Constants.isCallEnded = true
             finish()
-            startActivity(Intent(this@RTCActivity, MainActivity::class.java))
+            startActivity(Intent(this@RTCActivity, AppointmentsActivity::class.java))
         }
     }
 
@@ -233,7 +233,8 @@ class RTCActivity : BaseActivity() {
                 Constants.isCallEnded = true
                 rtcClient.endCall(meetingID)
                 finish()
-                startActivity(Intent(this@RTCActivity, MainActivity::class.java))
+                Toast.makeText(applicationContext, "Hovor bol ukončený druhou stranou.", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@RTCActivity, AppointmentsActivity::class.java))
             }
         }
     }

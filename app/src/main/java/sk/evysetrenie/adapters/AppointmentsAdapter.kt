@@ -46,6 +46,9 @@ class AppointmentsAdapter(private val appointmentsList: MutableList<AppointmentR
         } else if (appointment.date == currentDate && appointment.time_to > currentTime && appointment.time_from <= currentTime) {
             if (appointment.type == "O") {
                 holder.appointmentCallButton.visibility = View.VISIBLE
+                holder.appointmentCallButton.setOnClickListener {
+                    activity.startMeeting(appointment.id)
+                }
             }
             holder.appointmentLayout.setBackgroundResource(R.color.primaryLightColor)
             holder.appointmentRemoveButton.visibility = View.GONE

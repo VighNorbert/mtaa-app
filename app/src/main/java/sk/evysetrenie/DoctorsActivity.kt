@@ -54,39 +54,40 @@ open class DoctorsActivity : MenuActivity(), SpecialisationReader, FavouriteSett
             setContentView(R.layout.activity_doctors)
         }
         super.onCreate(savedInstanceState)
+        if (AuthState.isLoggedIn()) {
+            doctorsLayoutManager = LinearLayoutManager(this)
+            doctorsNoResultTextView = findViewById(R.id.doctorsNoResultsTextView)
+            doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)
+            doctorsProgressBar = findViewById(R.id.doctorsProgressBar)
+            doctorsFilterLayout = findViewById(R.id.detailAppointmentLayout)
 
-        doctorsLayoutManager = LinearLayoutManager(this)
-        doctorsNoResultTextView = findViewById(R.id.doctorsNoResultsTextView)
-        doctorsRecyclerView = findViewById(R.id.doctorsRecyclerView)
-        doctorsProgressBar = findViewById(R.id.doctorsProgressBar)
-        doctorsFilterLayout = findViewById(R.id.detailAppointmentLayout)
+            doctorNameInputText = findViewById(R.id.doctorNameInputText)
+            doctorSpecialisationInputText = findViewById(R.id.doctorSpecialisationInputText)
+            doctorCityInputText = findViewById(R.id.doctorCityInputText)
+            doctorOnlyFavouritesCheckBox = findViewById(R.id.doctorOnlyFavouritesCheckBox)
 
-        doctorNameInputText = findViewById(R.id.doctorNameInputText)
-        doctorSpecialisationInputText = findViewById(R.id.doctorSpecialisationInputText)
-        doctorCityInputText = findViewById(R.id.doctorCityInputText)
-        doctorOnlyFavouritesCheckBox = findViewById(R.id.doctorOnlyFavouritesCheckBox)
+            specialisationService = SpecialisationService()
 
-        specialisationService = SpecialisationService()
+            getDoctors()
+            doctorsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        val visibleItemCount = doctorsLayoutManager.childCount
+                        val pastVisibleItem = doctorsLayoutManager.findFirstCompletelyVisibleItemPosition()
+                        val total = doctorsAdapter.itemCount
 
-        getDoctors()
-        doctorsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    val visibleItemCount = doctorsLayoutManager.childCount
-                    val pastVisibleItem = doctorsLayoutManager.findFirstCompletelyVisibleItemPosition()
-                    val total = doctorsAdapter.itemCount
-
-                    if (!loading) {
-                        if (visibleItemCount + pastVisibleItem >= total) {
-                            page++
-                            getDoctors()
+                        if (!loading) {
+                            if (visibleItemCount + pastVisibleItem >= total) {
+                                page++
+                                getDoctors()
+                            }
                         }
                     }
+                    super.onScrolled(recyclerView, dx, dy)
                 }
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
-        specialisationService.getAll(this, this)
+            })
+            specialisationService.getAll(this, this)
+        }
     }
 
     override fun onBackPressed() { }
