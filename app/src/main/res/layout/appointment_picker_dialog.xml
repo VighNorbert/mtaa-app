@@ -5,25 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/detail.time"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="22sp" />
+
     <NumberPicker
         android:id="@+id/timePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heading"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/timePicker"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/timeSetButton"
+            android:id="@+id/timeSetCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"/>
+            android:layout_weight="1"
+            style="@style/SecondaryButton"
+            android:text="@string/buttons.remove"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/timeSetConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/PrimaryButton"
+            android:text="@string/buttons.confirm"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
 
     </LinearLayout>
 

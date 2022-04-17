@@ -24,8 +24,12 @@ class AppointmentPickerDialog(
         builder.setCancelable(true)
 
         val appointments = mutableListOf<String>()
+        val appointmentsMap = mutableMapOf<String, Int>()
+        var timeslot: String
         for (time in times) {
-            appointments.add(time.time_from.dropLast(3) + " - " + time.time_to.dropLast(3))
+            timeslot = time.time_from.dropLast(3) + " - " + time.time_to.dropLast(3)
+            appointments.add(timeslot)
+            appointmentsMap[timeslot] = time.id
         }
 
         val timePicker = v.findViewById<NumberPicker>(R.id.timePicker)
@@ -33,19 +37,16 @@ class AppointmentPickerDialog(
         timePicker.maxValue = appointments.size - 1
         timePicker.displayedValues = appointments.toTypedArray()
         timePicker.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+        timePicker.wrapSelectorWheel = false
 
-        v.findViewById<Button>(R.id.timeSetButton).setOnClickListener {
+        v.findViewById<Button>(R.id.timeSetConfirm).setOnClickListener {
             dialog.dismiss()
-            activity.timePicked(appointments[timePicker.value])
+            activity.timePicked(appointmentsMap[appointments[timePicker.value]], appointments[timePicker.value])
         }
 
-//        v.findViewById<Button>(R.id.buttonYes).setOnClickListener {
-//            dialog.dismiss()
-//            adapter.remove(adapterPosition)
-//        }
-//        v.findViewById<Button>(R.id.buttonNo).setOnClickListener {
-//            dialog.dismiss()
-//        }
+        v.findViewById<Button>(R.id.timeSetCancel).setOnClickListener {
+            dialog.dismiss()
+        }
 
         dialog = builder.create()
         dialog.show()

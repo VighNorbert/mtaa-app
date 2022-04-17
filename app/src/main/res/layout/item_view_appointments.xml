@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="true"
+        android:gravity="center_vertical"
         android:id="@+id/masterLayout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">

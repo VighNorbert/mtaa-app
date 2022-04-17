@@ -54,6 +54,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
     private var pickedDay: Int = 0
     private var pickedMonth: Int = 0
     private var pickedYear: Int = 0
+    private var pickedAppointmentId = 0
 
     private var availableDays = mutableListOf<Calendar>()
 
@@ -111,7 +112,10 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
             pickedDay = dayOfMonth
             pickedMonth = monthOfYear+1
             pickedYear = year
+            pickedAppointmentId = 0
             detailAppointmentTime.isEnabled = true
+            detailAppointmentTime.text = resources.getString(R.string.detail_time)
+            detailAppointmentSubmit.isEnabled = false
             detailAppointmentTime.setTextColor(Color.BLACK)
         }
         appointmentPickerDialog = AppointmentPickerDialog(this)
@@ -179,13 +183,18 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
     fun timesReceived(times: List<AppointmentTimesResponse>) {
         val sortedTimes = times.sortedWith(compareBy { it.time_from })
         appointmentPickerDialog.open(sortedTimes)
-        detailAppointmentSubmit.isEnabled = true
-        detailAppointmentSubmit.backgroundTintList = ColorStateList.valueOf(Color.rgb(94, 167, 255))
         loadingDialog.dismiss()
     }
 
-    fun timePicked(time: String) {
+    fun timePicked(appointmentId: Int?, time: String) {
+        if (appointmentId != null) {
+            pickedAppointmentId = appointmentId
+        }
+        else {
+            println("null")
+        }
         detailAppointmentTime.text = "Čas: $time"
+        detailAppointmentSubmit.isEnabled = true
     }
 
     fun printSchedules(schedules: List<WorkSchedule>) {

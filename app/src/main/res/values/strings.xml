@@ -36,7 +36,7 @@
     <string name="buttons.save_changes">Uložiť zmeny</string>
     <string name="buttons.call">Zavolať</string>
     <string name="buttons.remove">Zrušiť</string>
-
+    <string name="buttons.confirm">Potvrdiť</string>
 
     <string name="login.heading">Prihlásenie</string>
     <string name="login.login_button">Prihlásiť sa</string>
