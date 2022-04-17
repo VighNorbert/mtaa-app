@@ -245,16 +245,8 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent">
-
-            <!--            <TextView-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:text="choose date"-->
-            <!--                android:gravity="center"-->
-            <!--                android:onClick="showCalendar"-->
-            <!--                android:background="@color/primaryColor"/>-->
 
             <TextView
                 android:id="@+id/detailAppointmentDate"
@@ -268,34 +260,39 @@
                 android:padding="16dp"
                 android:text="@string/detail.date"
                 android:textSize="18sp"
-                app:hintTextColor="#757575"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <!--                <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
-            <!--                    android:id="@+id/detailAppointmentDateText"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="@string/detail.date"-->
-            <!--                    android:inputType="none"-->
-            <!--                    android:onClick="getAvailableDates"-->
-            <!--                    android:textColor="#757575"-->
-            <!--                    tools:ignore="TextContrastCheck" />-->
-
-            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <TextView
+                android:id="@+id/detailAppointmentTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/curve_background"
+                android:fontFamily="@font/poppins"
+                android:onClick="getAvailableTimes"
+                android:padding="16dp"
+                android:text="@string/detail.time"
+                android:textSize="18sp"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/detailAppointmentNext"
+                android:id="@+id/detailAppointmentSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="32dp"
-                android:backgroundTint="@color/primaryColor"
+                android:backgroundTint="@color/primaryDarkColor"
                 android:paddingVertical="16dp"
                 android:text="@string/detail.make_appointment_submit"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp"
+                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

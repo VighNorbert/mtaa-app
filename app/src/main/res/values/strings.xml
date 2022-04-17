@@ -74,6 +74,7 @@
     <string name="detail.contact"><b>Kontakt:</b></string>
     <string name="detail.description"><b>Popis:</b></string>
     <string name="detail.date">Zvoľte dátum vyšetrenia</string>
+    <string name="detail.time">Zvoľte čas vyšetrenia</string>
 
     <string name="appointments.heading">Vyšetrenia</string>
     <string name="appointments.no_results">Neboli nájdené žiadne výsledky</string>

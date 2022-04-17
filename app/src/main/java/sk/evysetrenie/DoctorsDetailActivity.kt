@@ -1,7 +1,11 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -10,15 +14,19 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.*
 import androidx.core.view.isVisible
+import sk.evysetrenie.api.AuthState
+import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.interfaces.AvatarReader
 import sk.evysetrenie.api.interfaces.DoctorsDetailReader
 import sk.evysetrenie.api.interfaces.FavouriteSetter
-import sk.evysetrenie.api.AuthState
-import sk.evysetrenie.api.DoctorsService
 import sk.evysetrenie.api.model.WorkSchedule
 import sk.evysetrenie.api.model.contracts.responses.ApiError
+import sk.evysetrenie.api.model.contracts.responses.AppointmentTimesResponse
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
+import sk.evysetrenie.dialogs.AppointmentPickerDialog
+import sk.evysetrenie.dialogs.ConfirmDialog
 import java.util.*
+
 
 class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader,
     AvatarReader {
@@ -40,6 +48,8 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
     private lateinit var detailAppointmentLayout: LinearLayout
     private lateinit var detailAppointmentDate: TextView
+    private lateinit var detailAppointmentTime: TextView
+    private lateinit var detailAppointmentSubmit: Button
 
     private var pickedDay: Int = 0
     private var pickedMonth: Int = 0
@@ -47,9 +57,9 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
     private var availableDays = mutableListOf<Calendar>()
 
-    private val dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog()
+    private val datePickerDialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog()
+    private lateinit var appointmentPickerDialog: AppointmentPickerDialog
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         checkLoggedIn()
         if (AuthState.isLoggedIn()) {
@@ -69,6 +79,8 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
         detailAppointmentLayout = findViewById(R.id.detailAppointmentLayout)
         detailAppointmentDate = findViewById(R.id.detailAppointmentDate)
+        detailAppointmentTime = findViewById(R.id.detailAppointmentTime)
+        detailAppointmentSubmit = findViewById(R.id.detailAppointmentSubmit)
 
         val b: Bundle? = intent.extras
         doctorId = b?.getInt("id")
@@ -94,12 +106,15 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
             }
             isFavourite = !isFavourite
         }
-        dpd.setOnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        datePickerDialog.setOnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             detailAppointmentDate.text = "Dátum: ${dayOfMonth}. ${monthOfYear + 1}. $year"
             pickedDay = dayOfMonth
             pickedMonth = monthOfYear+1
             pickedYear = year
+            detailAppointmentTime.isEnabled = true
+            detailAppointmentTime.setTextColor(Color.BLACK)
         }
+        appointmentPickerDialog = AppointmentPickerDialog(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -134,10 +149,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         loadingDialog.open()
         val month = Calendar.getInstance().get(Calendar.MONTH)+1
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        println(month)
-        println(year)
         DoctorsService().getDates(doctorId!!, month, year, this)
-        DoctorsService().getDates(doctorId!!, month+1, year, this)
     }
 
     fun datesReceived(days: List<Int>, month: Int, year: Int) {
@@ -148,12 +160,32 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
             availableDays.add(calendar)
         }
         flag++
+        if (flag == 1) {
+            DoctorsService().getDates(doctorId!!, month+1, year, this)
+        }
         if (flag == 2) {
             flag = 0
-            dpd.selectableDays = availableDays.toTypedArray()
-            dpd.show(supportFragmentManager, "dpd")
+            datePickerDialog.selectableDays = availableDays.toTypedArray()
+            datePickerDialog.show(supportFragmentManager, "dpd")
             loadingDialog.dismiss()
         }
+    }
+
+    fun getAvailableTimes(v: View) {
+        loadingDialog.open()
+        DoctorsService().getTimes(doctorId!!, pickedDay, pickedMonth, pickedYear, this)
+    }
+
+    fun timesReceived(times: List<AppointmentTimesResponse>) {
+        val sortedTimes = times.sortedWith(compareBy { it.time_from })
+        appointmentPickerDialog.open(sortedTimes)
+        detailAppointmentSubmit.isEnabled = true
+        detailAppointmentSubmit.backgroundTintList = ColorStateList.valueOf(Color.rgb(94, 167, 255))
+        loadingDialog.dismiss()
+    }
+
+    fun timePicked(time: String) {
+        detailAppointmentTime.text = "Čas: $time"
     }
 
     fun printSchedules(schedules: List<WorkSchedule>) {
