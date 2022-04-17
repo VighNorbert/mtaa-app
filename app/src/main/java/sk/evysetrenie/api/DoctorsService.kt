@@ -221,4 +221,42 @@ class DoctorsService {
         })
     }
 
+    fun getTimes(doctor_id: Int, day: Int, month: Int, year: Int, activity: DoctorsDetailActivity) {
+        val weburl = Constants.API_URL + "doctor/${doctor_id}/appointment/times"
+        val urlBuilder = weburl.toHttpUrl().newBuilder()
+        urlBuilder.addQueryParameter("day", day.toString())
+        urlBuilder.addQueryParameter("month", month.toString())
+        urlBuilder.addQueryParameter("year", year.toString())
+        val url = urlBuilder.build()
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("accept", "application/json")
+            .addHeader("x-auth-token", AuthState.getAccessToken())
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        try {
+                            val error =
+                                Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                            activity.runOnUiThread { activity.showError(error.error) }
+                        } catch (e: Exception) {
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        }
+                    } else {
+                        val res = Json.decodeFromString<List<AppointmentTimesResponse>>(response.body!!.string())
+                        activity.runOnUiThread { activity.timesReceived(res) }
+                    }
+                }
+            }
+        })
+    }
+
 }
