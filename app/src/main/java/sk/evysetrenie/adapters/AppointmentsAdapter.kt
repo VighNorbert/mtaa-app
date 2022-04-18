@@ -67,6 +67,7 @@ class AppointmentsAdapter(private val appointmentsList: MutableList<AppointmentR
     fun removeSuccess() {
         appointmentsList.removeAt(toBeRemoved)
         notifyItemRemoved(toBeRemoved)
+        notifyItemRangeChanged(toBeRemoved, itemCount - toBeRemoved)
     }
 
     override fun getItemCount() = appointmentsList.size
