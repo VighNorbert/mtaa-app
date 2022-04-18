@@ -1,369 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DoctorsDetailActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <ScrollView
-            android:id="@+id/scrollView2"
+        <LinearLayout
+            android:id="@+id/detailLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/detailLayout"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/doctorAvatarLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/doctorAvatarLayout"
+                    <ImageView
+                        android:id="@+id/doctorAvatarImageView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_height="210dp"
+                        android:layout_marginTop="24dp"
+                        android:contentDescription="@string/register.doctor.photo"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ImageContrastCheck"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:srcCompat="@tools:sample/avatars" />
 
-                        <ImageView
-                            android:id="@+id/doctorAvatarImageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="210dp"
-                            android:layout_marginTop="24dp"
-                            android:contentDescription="@string/register.doctor.photo"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="ImageContrastCheck"
-                            tools:layout_editor_absoluteX="0dp"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <ImageView
-                            android:id="@+id/doctorStar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="16dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/star_unfilled"
-                            android:clickable="true"
-                            android:contentDescription="@string/doctors.notfavourite"
-                            android:focusable="true"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/doctorNameText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="32dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="26sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorAvatarLayout" />
-
-                    <TextView
-                        android:id="@+id/doctorSpecialisationText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorNameText" />
-
-                    <TextView
-                        android:id="@+id/doctorScheduleHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="32dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/detail.schedule"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorSpecialisationText" />
-
-                    <TextView
-                        android:id="@+id/doctorScheduleDayText"
+                    <ImageView
+                        android:id="@+id/doctorStar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
-
-                    <TextView
-                        android:id="@+id/doctorScheduleTimeText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="16sp"
-                        app:layout_constraintLeft_toRightOf="@id/doctorScheduleDayText"
-                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
-
-
-                    <Button
-                        android:id="@+id/doctorsMakeAppointmentButtonTop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="16dp"
-                        android:backgroundTint="@color/primaryColor"
-                        android:gravity="center"
-                        android:onClick="onMakeAppointmentClick"
-                        android:text="@string/detail.make_appointment"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorScheduleDayText" />
-
-                    <TextView
-                        android:id="@+id/doctorAddressHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/detail.address"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorsMakeAppointmentButtonTop" />
-
-                    <TextView
-                        android:id="@+id/doctorAddressText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorAddressHeading" />
-
-                    <TextView
-                        android:id="@+id/doctorContactHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/detail.contact"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorAddressText" />
-
-                    <TextView
-                        android:id="@+id/doctorContactText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorContactHeading" />
-
-                    <TextView
-                        android:id="@+id/doctorDescriptionHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/detail.description"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorContactText" />
-
-                    <TextView
-                        android:id="@+id/doctorDescriptionText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="-4dp"
-                        android:fontFamily="@font/poppins"
-                        android:paddingBottom="80dp"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doctorDescriptionHeading" />
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/star_unfilled"
+                        android:clickable="true"
+                        android:contentDescription="@string/doctors.notfavourite"
+                        android:focusable="true"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-
-        </ScrollView>
-
-        <TextView
-            android:id="@+id/detailMakeAppointmentButtonBottom"
-            style="@style/PopupButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingVertical="16dp"
-            android:onClick="onMakeAppointmentClick"
-            android:text="@string/detail.make_appointment"
-            app:layout_constraintBottom_toTopOf="@id/detailAppointmentLayout" />
-
-        <LinearLayout
-            android:id="@+id/detailAppointmentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primaryShadeColor"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/detailAppointmentDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/curve_background"
-                android:fontFamily="@font/poppins"
-                android:onClick="getAvailableDates"
-                android:padding="18dp"
-                android:text="@string/detail.date"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/detailAppointmentTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/curve_background"
-                android:fontFamily="@font/poppins"
-                android:onClick="getAvailableTimes"
-                android:padding="18dp"
-                android:text="@string/detail.time"
-                android:textSize="18sp"
-                android:enabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/detailAppointmentTypeLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxBackgroundColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/detailAppointmentTypeText"
+                <TextView
+                    android:id="@+id/doctorNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="32dp"
                     android:fontFamily="@font/poppins"
-                    android:hint="@string/detail.type"
-                    android:inputType="none"
-                    android:textSize="18sp"
-                    android:textColorHint="@color/black"
-                    tools:ignore="TextContrastCheck" />
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="26sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorAvatarLayout" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/detailAppointmentDescriptionLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:boxBackgroundColor="@color/white"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/detailAppointmentDescriptionText"
+                <TextView
+                    android:id="@+id/doctorSpecialisationText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/detail.appointment_description"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
-                    android:inputType="text"
-                    android:maxLines="2"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorNameText" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/detailAppointmentSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="32dp"
-                android:paddingVertical="16dp"
-                android:text="@string/detail.make_appointment_submit"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:enabled="false"
-                android:onClick="onMakeAppointmentSubmit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/doctorScheduleHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/detail.schedule"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorSpecialisationText" />
+
+                <TextView
+                    android:id="@+id/doctorScheduleDayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
+
+                <TextView
+                    android:id="@+id/doctorScheduleTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/doctorScheduleDayText"
+                    app:layout_constraintTop_toBottomOf="@id/doctorScheduleHeading" />
+
+
+                <Button
+                    android:id="@+id/doctorsMakeAppointmentButtonTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/primaryColor"
+                    android:gravity="center"
+                    android:onClick="onMakeAppointmentClick"
+                    android:text="@string/detail.make_appointment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorScheduleDayText" />
+
+                <TextView
+                    android:id="@+id/doctorAddressHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/detail.address"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorsMakeAppointmentButtonTop" />
+
+                <TextView
+                    android:id="@+id/doctorAddressText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorAddressHeading" />
+
+                <TextView
+                    android:id="@+id/doctorContactHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/detail.contact"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorAddressText" />
+
+                <TextView
+                    android:id="@+id/doctorContactText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorContactHeading" />
+
+                <TextView
+                    android:id="@+id/doctorDescriptionHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/detail.description"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorContactText" />
+
+                <TextView
+                    android:id="@+id/doctorDescriptionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/poppins"
+                    android:paddingBottom="80dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/doctorDescriptionHeading" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
-        app:itemTextAppearance="@style/ItemTextAppearance"
-        app:menu="@menu/nav_menu" />
-</androidx.drawerlayout.widget.DrawerLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/detailMakeAppointmentButtonBottom"
+        style="@style/PopupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingVertical="16dp"
+        android:onClick="onMakeAppointmentClick"
+        android:text="@string/detail.make_appointment"
+        app:layout_constraintBottom_toTopOf="@id/detailAppointmentLayout" />
+
+    <LinearLayout
+        android:id="@+id/detailAppointmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryShadeColor"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/detailAppointmentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/curve_background"
+            android:fontFamily="@font/poppins"
+            android:onClick="getAvailableDates"
+            android:padding="18dp"
+            android:text="@string/detail.date"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/detailAppointmentTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/curve_background"
+            android:fontFamily="@font/poppins"
+            android:onClick="getAvailableTimes"
+            android:padding="18dp"
+            android:text="@string/detail.time"
+            android:textSize="18sp"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailAppointmentTypeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/detailAppointmentTypeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="@string/detail.type"
+                android:inputType="none"
+                android:textSize="18sp"
+                android:textColorHint="@color/black"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailAppointmentDescriptionLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/detailAppointmentDescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/detail.appointment_description"
+                android:fontFamily="@font/poppins"
+                android:textSize="18sp"
+                android:inputType="text"
+                android:maxLines="2"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detailAppointmentSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="32dp"
+            android:paddingVertical="16dp"
+            android:text="@string/detail.make_appointment_submit"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:enabled="false"
+            android:onClick="onMakeAppointmentSubmit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
