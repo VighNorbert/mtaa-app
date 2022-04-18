@@ -3,9 +3,11 @@ package sk.evysetrenie.api
 import android.graphics.BitmapFactory
 import android.widget.Toast
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import sk.evysetrenie.BaseActivity
@@ -14,6 +16,7 @@ import sk.evysetrenie.DoctorsDetailActivity
 import sk.evysetrenie.api.interfaces.AvatarReader
 import sk.evysetrenie.api.interfaces.DoctorsDetailReader
 import sk.evysetrenie.api.interfaces.FavouriteSetter
+import sk.evysetrenie.api.model.contracts.requests.AppointmentRequest
 import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.*
 
@@ -253,6 +256,41 @@ class DoctorsService {
                     } else {
                         val res = Json.decodeFromString<List<AppointmentTimesResponse>>(response.body!!.string())
                         activity.runOnUiThread { activity.timesReceived(res) }
+                    }
+                }
+            }
+        })
+    }
+
+    fun makeAppointment(doctorId: Int, appointmentId: Int, requestBody: AppointmentRequest, activity: DoctorsDetailActivity) {
+        val body = Json.encodeToString(requestBody)
+
+        val request = Request.Builder()
+            .url(Constants.API_URL + "doctor/${doctorId}/appointment/${appointmentId}")
+            .method("POST", body.toRequestBody("application/json; charset=utf-8".toMediaType()))
+            .addHeader("accept", "*/*")
+            .addHeader("x-auth-token", AuthState.getAccessToken())
+            .addHeader("Content-Type", "application/json")
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                activity.runOnUiThread { activity.showError(ApiError(400)) }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        try {
+                            val error =
+                                Json.decodeFromString<ErrorResponse>(response.body!!.string())
+                            activity.runOnUiThread { activity.showError(error.error) }
+                        } catch (e: Exception) {
+                            activity.runOnUiThread { activity.showError(ApiError(response.code)) }
+                        }
+                    } else {
+                        activity.runOnUiThread { activity.appointmentSuccess() }
                     }
                 }
             }
