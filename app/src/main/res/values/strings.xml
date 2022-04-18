@@ -78,6 +78,11 @@
     <string name="detail.type">Zvoľte typ vyšetrenia</string>
     <string name="detail.appointment_description">Zadajte krátky popis vyšetrenia</string>
 
+    <string name="appconfirm.heading">Potvrdenie objednávky</string>
+    <string name="appconfirm.message">Termín vyšetrenia bol úspešne zarezervovaný.</string>
+    <string name="appconfirm.ok">OK</string>
+
+
     <string name="appointments.heading">Nadchádzajúce vyšetrenia</string>
     <string name="appointments.no_results">Neboli nájdené žiadne výsledky</string>
     <string name="appointments.no_results_doctors">Pre zvolený dátum neboli nájdené žiadne výsledky</string>

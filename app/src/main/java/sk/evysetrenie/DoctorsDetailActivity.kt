@@ -1,6 +1,7 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -12,7 +13,9 @@ import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -28,7 +31,9 @@ import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentTimesResponse
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
+import sk.evysetrenie.dialogs.AppointmentConfirmDialog
 import sk.evysetrenie.dialogs.AppointmentPickerDialog
+import sk.evysetrenie.dialogs.ConfirmDialog
 import java.util.*
 
 
@@ -50,13 +55,13 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
     private var flag: Int = 0
 
-    private lateinit var detailAppointmentLayout: LinearLayout
-    private lateinit var detailAppointmentDate: TextView
-    private lateinit var detailAppointmentTime: TextView
-    private lateinit var detailAppointmentTypeText: TextView
-    private lateinit var detailAppointmentDescriptionLayout: TextInputLayout
-    private lateinit var detailAppointmentDescriptionText: TextInputEditText
-    private lateinit var detailAppointmentSubmit: Button
+    lateinit var detailAppointmentLayout: LinearLayout
+    lateinit var detailAppointmentDate: TextView
+    lateinit var detailAppointmentTime: TextView
+    lateinit var detailAppointmentTypeText: TextView
+    lateinit var detailAppointmentDescriptionLayout: TextInputLayout
+    lateinit var detailAppointmentDescriptionText: TextInputEditText
+    lateinit var detailAppointmentSubmit: Button
 
     private var pickedDay: Int = 0
     private var pickedMonth: Int = 0
@@ -236,7 +241,12 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
     }
 
     override fun showError(error: ApiError) {
-        Toast.makeText(this.applicationContext, error.message, Toast.LENGTH_SHORT).show()
+        if (error.code == 409) {
+            Toast.makeText(this.applicationContext, error.message + ". Prosím, zvoľte iný termín", Toast.LENGTH_LONG).show()
+        }
+        else {
+            Toast.makeText(this.applicationContext, error.message, Toast.LENGTH_LONG).show()
+        }
         loadingDialog.dismiss()
     }
 
@@ -265,6 +275,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
     }
 
     fun onMakeAppointmentSubmit(v: View) {
+        v.hideKeyboard()
         loadingDialog.open()
         val type: String
         if (detailAppointmentTypeText.text == "Fyzicky") {
@@ -281,10 +292,16 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         DoctorsService().makeAppointment(doctorId, pickedAppointmentId, ar, this)
     }
 
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     fun appointmentSuccess() {
-        Toast.makeText(this.applicationContext, "Termín vyšetrenia bol úspešne zarezervovaný", Toast.LENGTH_LONG).show()
-        val intent = Intent(this, AppointmentsActivity::class.java)
-        startActivity(intent)
+        detailAppointmentLayout.visibility = View.GONE
+        loadingDialog.dismiss()
+//        Toast.makeText(this.applicationContext, "Termín vyšetrenia bol úspešne zarezervovaný", Toast.LENGTH_LONG).show()
+        AppointmentConfirmDialog(this).open()
     }
 
 }
