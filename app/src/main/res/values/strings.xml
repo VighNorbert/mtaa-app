@@ -78,6 +78,7 @@
 
     <string name="appointments.heading">Nadchádzajúce vyšetrenia</string>
     <string name="appointments.no_results">Neboli nájdené žiadne výsledky</string>
+    <string name="appointments.no_results_doctors">Pre zvolený dátum neboli nájdené žiadne výsledky</string>
 
     <string name="my_profile.heading">Môj profil</string>
     <string name="my_profile.success">Váš profil bol úspešne zmenený.</string>

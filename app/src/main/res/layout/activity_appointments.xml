@@ -38,6 +38,11 @@
                     android:textColor="@color/primaryTextColor"
                     android:textSize="30sp" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/datesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
                 <TextView
                     android:id="@+id/appointmentsNoResultsTextView"
                     android:layout_width="match_parent"

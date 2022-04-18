@@ -245,7 +245,7 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
@@ -259,8 +259,8 @@
                 android:onClick="getAvailableDates"
                 android:padding="16dp"
                 android:text="@string/detail.date"
-                android:textSize="18sp"
                 android:textColor="@color/black"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -271,16 +271,16 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/curve_background"
+                android:enabled="false"
                 android:fontFamily="@font/poppins"
                 android:onClick="getAvailableTimes"
                 android:padding="16dp"
                 android:text="@string/detail.time"
                 android:textSize="18sp"
-                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-<!--            hintEnabled-->
+            <!--            hintEnabled-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/detailAppointmentSubmit"
@@ -288,12 +288,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="32dp"
+                android:enabled="false"
                 android:paddingVertical="16dp"
                 android:text="@string/detail.make_appointment_submit"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

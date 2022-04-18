@@ -11,13 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import okhttp3.internal.notify
 import sk.evysetrenie.adapters.AppointmentsAdapter
+import sk.evysetrenie.adapters.DatesAdapter
 import sk.evysetrenie.api.AppointmentsService
 import sk.evysetrenie.api.AuthState
+import sk.evysetrenie.api.model.AppointmentDate
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentResponse
 import sk.evysetrenie.webrtc.Constants
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,11 +36,16 @@ class AppointmentsActivity : MenuActivity() {
     private lateinit var appointmentsRecyclerView: RecyclerView
     private lateinit var appointmentsProgressBar: ProgressBar
 
+    private lateinit var datesLayoutManager: LinearLayoutManager
+    private lateinit var datesAdapter: DatesAdapter
+    private lateinit var datesRecyclerView: RecyclerView
+
     var meetingId : String = ""
     var meetingIdBase : String = ""
-    var meetingIdModifier : Int = 0
+    private var meetingIdModifier : Int = 0
 
     private var appointmentsList: MutableList<AppointmentResponse> = ArrayList()
+    private var datesList: MutableList<AppointmentDate> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         checkLoggedIn()
@@ -46,6 +56,22 @@ class AppointmentsActivity : MenuActivity() {
             appointmentsRecyclerView = findViewById(R.id.appointmentsRecyclerView)
             appointmentsRecyclerView.layoutManager = appointmentsLayoutManager
             appointmentsProgressBar = findViewById(R.id.appointmentsProgressBar)
+
+            if (AuthState.isDoctor()!!) {
+                datesLayoutManager =
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                datesRecyclerView = findViewById(R.id.datesRecyclerView)
+                datesRecyclerView.layoutManager = datesLayoutManager
+                val now = LocalDate.now()
+                for (i in 0..31) {
+                    val day = now.plusDays(i.toLong())
+                    datesList.add(AppointmentDate(day, mutableListOf()))
+                }
+                datesAdapter = DatesAdapter(datesList, this)
+                datesRecyclerView.adapter = datesAdapter
+
+                appointmentsNoResultTextView.text = resources.getString(R.string.appointments_no_results_doctors)
+            }
         }
         super.onCreate(savedInstanceState)
         if (AuthState.isLoggedIn()) {
@@ -56,27 +82,57 @@ class AppointmentsActivity : MenuActivity() {
         }
     }
 
-    override fun onBackPressed() { }
-
-    @SuppressLint("SimpleDateFormat")
-    fun dataReceived(appointments: List<AppointmentResponse>) {
-        val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
-        val currentTime = SimpleDateFormat("HH:mm").format(Date())
-        val sortedappointments = appointments
-            .filter { it.date > currentDate || (it.date == currentDate && it.time_to > currentTime) }
-            .sortedWith(compareBy<AppointmentResponse> { it.date }.thenBy { it.time_from })
-        appointmentsList.addAll(sortedappointments)
-        if (appointmentsList.isEmpty()) {
+    fun changeAppointments(list: MutableList<AppointmentResponse>) {
+        val size = appointmentsList.size
+        appointmentsList.clear()
+        appointmentsAdapter.notifyItemRangeRemoved(0, size)
+        appointmentsList.addAll(list)
+        if (list.isEmpty()) {
             appointmentsNoResultTextView.visibility = View.VISIBLE
         } else {
             appointmentsNoResultTextView.visibility = View.GONE
         }
-        if (this::appointmentsAdapter.isInitialized) {
-            appointmentsAdapter.notifyItemRangeInserted(appointmentsList.size - appointments.size, appointmentsList.size)
-        }
-        else {
-            appointmentsAdapter = AppointmentsAdapter(appointmentsList, this)
-            appointmentsRecyclerView.adapter = appointmentsAdapter
+        appointmentsAdapter.notifyItemRangeInserted(0, appointmentsList.size)
+    }
+
+    override fun onBackPressed() { }
+
+    @SuppressLint("SimpleDateFormat")
+    fun dataReceived(appointments: List<AppointmentResponse>) {
+        if (AuthState.isDoctor()!!) {
+            if (!this::appointmentsAdapter.isInitialized) {
+                appointmentsAdapter = AppointmentsAdapter(appointmentsList, this)
+                appointmentsRecyclerView.adapter = appointmentsAdapter
+            }
+            val now = LocalDate.now()
+            for (i in 0..31) {
+                val day = now.plusDays(i.toLong()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val filtered = appointments.filter { it.date == day }
+                datesList[i].appointments.addAll(filtered)
+                if (filtered.isNotEmpty()) {
+                    datesAdapter.notifyItemChanged(i)
+                }
+            }
+            datesAdapter.itemSelected(0)
+        } else {
+            val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+            val currentTime = SimpleDateFormat("HH:mm").format(Date())
+            val sortedappointments = appointments
+                .filter { it.date > currentDate || (it.date == currentDate && it.time_to > currentTime) }
+                .sortedWith(compareBy<AppointmentResponse> { it.date }.thenBy { it.time_from })
+            appointmentsList.addAll(sortedappointments)
+            if (appointmentsList.isEmpty()) {
+                appointmentsNoResultTextView.visibility = View.VISIBLE
+            } else {
+                appointmentsNoResultTextView.visibility = View.GONE
+            }
+            if (this::appointmentsAdapter.isInitialized) {
+                appointmentsAdapter.notifyItemRangeInserted(appointmentsList.size - appointments.size, appointmentsList.size)
+            }
+            else {
+                appointmentsAdapter = AppointmentsAdapter(appointmentsList, this)
+                appointmentsRecyclerView.adapter = appointmentsAdapter
+            }
         }
         appointmentsProgressBar.visibility = View.GONE
     }
