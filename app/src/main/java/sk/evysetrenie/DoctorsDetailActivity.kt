@@ -1,22 +1,30 @@
 package sk.evysetrenie
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.*
 import androidx.core.view.isVisible
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import sk.evysetrenie.api.AuthState
 import sk.evysetrenie.api.DoctorsService
+import sk.evysetrenie.api.Validator
 import sk.evysetrenie.api.interfaces.AvatarReader
 import sk.evysetrenie.api.interfaces.DoctorsDetailReader
 import sk.evysetrenie.api.interfaces.FavouriteSetter
 import sk.evysetrenie.api.model.WorkSchedule
+import sk.evysetrenie.api.model.contracts.requests.AppointmentRequest
+import sk.evysetrenie.api.model.contracts.requests.DoctorsRequest
 import sk.evysetrenie.api.model.contracts.responses.ApiError
 import sk.evysetrenie.api.model.contracts.responses.AppointmentTimesResponse
 import sk.evysetrenie.api.model.contracts.responses.DoctorsDetailResponse
@@ -27,7 +35,7 @@ import java.util.*
 class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDetailReader,
     AvatarReader {
 
-    private var doctorId: Int? = 0
+    private var doctorId: Int = 0
     private var isFavourite: Boolean = false
 
     private lateinit var doctorAvatarImageView: ImageView
@@ -45,6 +53,9 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
     private lateinit var detailAppointmentLayout: LinearLayout
     private lateinit var detailAppointmentDate: TextView
     private lateinit var detailAppointmentTime: TextView
+    private lateinit var detailAppointmentTypeText: TextView
+    private lateinit var detailAppointmentDescriptionLayout: TextInputLayout
+    private lateinit var detailAppointmentDescriptionText: TextInputEditText
     private lateinit var detailAppointmentSubmit: Button
 
     private var pickedDay: Int = 0
@@ -56,6 +67,8 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
     private val datePickerDialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog()
     private lateinit var appointmentPickerDialog: AppointmentPickerDialog
+
+    private val validator: Validator = Validator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         checkLoggedIn()
@@ -77,29 +90,26 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         detailAppointmentLayout = findViewById(R.id.detailAppointmentLayout)
         detailAppointmentDate = findViewById(R.id.detailAppointmentDate)
         detailAppointmentTime = findViewById(R.id.detailAppointmentTime)
+        detailAppointmentTypeText = findViewById(R.id.detailAppointmentTypeText)
+        detailAppointmentDescriptionLayout = findViewById(R.id.detailAppointmentDescriptionLayout)
+        detailAppointmentDescriptionText = findViewById(R.id.detailAppointmentDescriptionText)
         detailAppointmentSubmit = findViewById(R.id.detailAppointmentSubmit)
 
         val b: Bundle? = intent.extras
-        doctorId = b?.getInt("id")
-        if (doctorId != null) {
-            loadingDialog.open()
-            DoctorsService().getDetail(doctorId!!, this)
-            DoctorsService().getAvatar(doctorId!!, this)
-        }
+        doctorId = b?.getInt("id")!!
+        loadingDialog.open()
+        DoctorsService().getDetail(doctorId, this)
+        DoctorsService().getAvatar(doctorId, this)
         doctorStar.setOnClickListener{
             if (isFavourite) {
                 doctorStar.setImageResource(R.drawable.star_unfilled)
                 doctorStar.contentDescription = "Lekár nie je obľúbený"
-                if (doctorId != null) {
-                    DoctorsService().removeFromFavourites(doctorId!!,this, this)
-                }
+                DoctorsService().removeFromFavourites(doctorId,this, this)
             }
             else {
                 doctorStar.setImageResource(R.drawable.star_filled)
                 doctorStar.contentDescription = "Lekár je obľúbený"
-                if (doctorId != null) {
-                    DoctorsService().addToFavourites(doctorId!!,this, this)
-                }
+                DoctorsService().addToFavourites(doctorId,this, this)
             }
             isFavourite = !isFavourite
         }
@@ -115,6 +125,11 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
             detailAppointmentTime.setTextColor(Color.BLACK)
         }
         appointmentPickerDialog = AppointmentPickerDialog(this)
+        val types: List<String> = listOf("Fyzicky", "Online")
+        val adapter = ArrayAdapter(this, R.layout.list_item, types)
+        (detailAppointmentTypeText as? AutoCompleteTextView)?.setAdapter(adapter)
+        detailAppointmentTypeText.addTextChangedListener(TextFieldValidation())
+        detailAppointmentDescriptionText.addTextChangedListener(TextFieldValidation())
     }
 
     @SuppressLint("SetTextI18n")
@@ -149,7 +164,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         loadingDialog.open()
         val month = Calendar.getInstance().get(Calendar.MONTH)+1
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        DoctorsService().getDates(doctorId!!, month, year, this)
+        DoctorsService().getDates(doctorId, month, year, this)
     }
 
     fun datesReceived(days: List<Int>, month: Int, year: Int) {
@@ -161,7 +176,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         }
         flag++
         if (flag == 1) {
-            DoctorsService().getDates(doctorId!!, month+1, year, this)
+            DoctorsService().getDates(doctorId, month+1, year, this)
         }
         if (flag == 2) {
             flag = 0
@@ -173,7 +188,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
 
     fun getAvailableTimes(v: View) {
         loadingDialog.open()
-        DoctorsService().getTimes(doctorId!!, pickedDay, pickedMonth, pickedYear, this)
+        DoctorsService().getTimes(doctorId, pickedDay, pickedMonth, pickedYear, this)
     }
 
     fun timesReceived(times: List<AppointmentTimesResponse>) {
@@ -190,7 +205,7 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
             println("null")
         }
         detailAppointmentTime.text = "Čas: $time"
-        detailAppointmentSubmit.isEnabled = true
+        detailAppointmentSubmit.isEnabled = allFieldsFilled()
     }
 
     fun printSchedules(schedules: List<WorkSchedule>) {
@@ -232,6 +247,44 @@ class DoctorsDetailActivity() : ReturningActivity(), FavouriteSetter, DoctorsDet
         else {
             detailAppointmentLayout.visibility = View.VISIBLE
         }
+    }
+
+    fun allFieldsFilled(): Boolean {
+        return validator.validateDescription(detailAppointmentDescriptionText, detailAppointmentDescriptionLayout)
+            && detailAppointmentDate.text != resources.getString(R.string.detail_date)
+            && detailAppointmentTime.text != resources.getString(R.string.detail_time)
+            && detailAppointmentTypeText.text.isNotEmpty()
+    }
+
+    inner class TextFieldValidation() : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            detailAppointmentSubmit.isEnabled = allFieldsFilled()
+        }
+        override fun afterTextChanged(p0: Editable?) {}
+    }
+
+    fun onMakeAppointmentSubmit(v: View) {
+        loadingDialog.open()
+        val type: String
+        if (detailAppointmentTypeText.text == "Fyzicky") {
+            type = "F"
+        }
+        else {
+            type = "O"
+        }
+        val description = detailAppointmentDescriptionText.text.toString()
+        val ar = AppointmentRequest(
+            description,
+            type
+        )
+        DoctorsService().makeAppointment(doctorId, pickedAppointmentId, ar, this)
+    }
+
+    fun appointmentSuccess() {
+        Toast.makeText(this.applicationContext, "Termín vyšetrenia bol úspešne zarezervovaný", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, AppointmentsActivity::class.java)
+        startActivity(intent)
     }
 
 }

@@ -64,6 +64,19 @@ class Validator {
         return true
     }
 
+    fun validateDescription(input: TextInputEditText, layout: TextInputLayout): Boolean {
+        if (input.text.toString().trim().isEmpty()) {
+            return false
+        }
+        if (input.text.toString().trim().length > 64) {
+            layout.error = "Pole musí obsahovať maximálne 64 znakov!"
+            input.requestFocus()
+            return false
+        }
+        layout.isErrorEnabled = false
+        return true
+    }
+
     fun validateNumber(input: TextInputEditText, layout: TextInputLayout, inputName: String): Boolean {
         if (!validateRequired(input, layout, inputName)) {
             return false

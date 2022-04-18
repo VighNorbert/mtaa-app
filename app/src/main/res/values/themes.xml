@@ -64,6 +64,10 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded</item>
     </style>
 
+    <style name="FilledDropdownRoundedBox2" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="cornerRadius">8dp</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">4dp</item>

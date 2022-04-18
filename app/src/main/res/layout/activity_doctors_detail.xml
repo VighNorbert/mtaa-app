@@ -257,7 +257,7 @@
                 android:background="@drawable/curve_background"
                 android:fontFamily="@font/poppins"
                 android:onClick="getAvailableDates"
-                android:padding="16dp"
+                android:padding="18dp"
                 android:text="@string/detail.date"
                 android:textSize="18sp"
                 android:textColor="@color/black"
@@ -273,14 +273,70 @@
                 android:background="@drawable/curve_background"
                 android:fontFamily="@font/poppins"
                 android:onClick="getAvailableTimes"
-                android:padding="16dp"
+                android:padding="18dp"
                 android:text="@string/detail.time"
                 android:textSize="18sp"
                 android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-<!--            hintEnabled-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/detailAppointmentTypeLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/detailAppointmentTypeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="@string/detail.type"
+                    android:inputType="none"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/black"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/detailAppointmentDescriptionLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/detailAppointmentDescriptionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/detail.appointment_description"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="18sp"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/detailAppointmentSubmit"
@@ -294,6 +350,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:enabled="false"
+                android:onClick="onMakeAppointmentSubmit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
